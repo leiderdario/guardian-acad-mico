@@ -14,16 +14,368 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      cargues: {
+        Row: {
+          created_at: string
+          fecha: string
+          id: string
+          nombre_archivo: string | null
+          numero_registros: number
+          riesgo_promedio: number | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          fecha?: string
+          id?: string
+          nombre_archivo?: string | null
+          numero_registros?: number
+          riesgo_promedio?: number | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          fecha?: string
+          id?: string
+          nombre_archivo?: string | null
+          numero_registros?: number
+          riesgo_promedio?: number | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      estudiantes: {
+        Row: {
+          codigo_estudiantil: string
+          correo_institucional: string | null
+          created_at: string
+          departamento_origen: string | null
+          facultad: string | null
+          fecha_nacimiento: string | null
+          id: string
+          municipio_origen: string | null
+          nombre_completo: string
+          numero_documento: string | null
+          programa_academico: string | null
+          sexo: string | null
+          telefono: string | null
+          tipo_documento: string | null
+          updated_at: string
+        }
+        Insert: {
+          codigo_estudiantil: string
+          correo_institucional?: string | null
+          created_at?: string
+          departamento_origen?: string | null
+          facultad?: string | null
+          fecha_nacimiento?: string | null
+          id?: string
+          municipio_origen?: string | null
+          nombre_completo: string
+          numero_documento?: string | null
+          programa_academico?: string | null
+          sexo?: string | null
+          telefono?: string | null
+          tipo_documento?: string | null
+          updated_at?: string
+        }
+        Update: {
+          codigo_estudiantil?: string
+          correo_institucional?: string | null
+          created_at?: string
+          departamento_origen?: string | null
+          facultad?: string | null
+          fecha_nacimiento?: string | null
+          id?: string
+          municipio_origen?: string | null
+          nombre_completo?: string
+          numero_documento?: string | null
+          programa_academico?: string | null
+          sexo?: string | null
+          telefono?: string | null
+          tipo_documento?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      notas_consejero: {
+        Row: {
+          contenido: string
+          created_at: string
+          estudiante_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          contenido: string
+          created_at?: string
+          estudiante_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          contenido?: string
+          created_at?: string
+          estudiante_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notas_consejero_estudiante_id_fkey"
+            columns: ["estudiante_id"]
+            isOneToOne: false
+            referencedRelation: "estudiantes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      registros_academicos: {
+        Row: {
+          ano_graduacion_bach: number | null
+          ano_ingreso: number | null
+          asistencia_clases: number | null
+          asistencia_psicologia: boolean | null
+          beca_apoyo: boolean | null
+          cabeza_hogar: boolean | null
+          cancelaciones_materias: number | null
+          cargue_id: string
+          clasificacion: string | null
+          created_at: string
+          creditos_aprobados: number | null
+          creditos_pendientes: number | null
+          distancia_campus: number | null
+          en_intervencion: boolean | null
+          estado_civil: string | null
+          estrato: number | null
+          estudiante_id: string
+          estudio_previo: boolean | null
+          factores_principales: string[] | null
+          horas_trabajo: number | null
+          id: string
+          indice_riesgo: number | null
+          ingreso_hogar: string | null
+          interrupciones: boolean | null
+          jornada: string | null
+          materias_aprobadas: number | null
+          materias_matriculadas: number | null
+          materias_reprobadas: number | null
+          materias_segunda_matricula: boolean | null
+          num_semestres_perdidos: number | null
+          numero_hijos: number | null
+          participa_grupos: boolean | null
+          personas_hogar: number | null
+          practicas_pasantias: boolean | null
+          promedio_acumulado: number | null
+          promedio_grado11: number | null
+          promedio_semestre: number | null
+          puntaje_ciencias_naturales: number | null
+          puntaje_competencias_ciudadanas: number | null
+          puntaje_ingles: number | null
+          puntaje_lectura_critica: number | null
+          puntaje_pensamiento_critico: number | null
+          puntaje_pensamiento_social: number | null
+          puntaje_razonamiento_mat: number | null
+          puntaje_saber11: number | null
+          razon_interrupcion: string | null
+          red_apoyo_familiar: boolean | null
+          satisfaccion_carrera: number | null
+          satisfaccion_universidad: number | null
+          semestre_actual: number | null
+          semestres_cursados: number | null
+          semestres_perdidos_rendimiento: boolean | null
+          sisben: boolean | null
+          solicitud_retiro: boolean | null
+          tiene_hijos: boolean | null
+          tipo_beca: string | null
+          tipo_colegio: string | null
+          trabaja: boolean | null
+          transporte: string | null
+          trastorno_aprendizaje: boolean | null
+          tutorias_solicitadas: number | null
+          violencia_acoso: boolean | null
+        }
+        Insert: {
+          ano_graduacion_bach?: number | null
+          ano_ingreso?: number | null
+          asistencia_clases?: number | null
+          asistencia_psicologia?: boolean | null
+          beca_apoyo?: boolean | null
+          cabeza_hogar?: boolean | null
+          cancelaciones_materias?: number | null
+          cargue_id: string
+          clasificacion?: string | null
+          created_at?: string
+          creditos_aprobados?: number | null
+          creditos_pendientes?: number | null
+          distancia_campus?: number | null
+          en_intervencion?: boolean | null
+          estado_civil?: string | null
+          estrato?: number | null
+          estudiante_id: string
+          estudio_previo?: boolean | null
+          factores_principales?: string[] | null
+          horas_trabajo?: number | null
+          id?: string
+          indice_riesgo?: number | null
+          ingreso_hogar?: string | null
+          interrupciones?: boolean | null
+          jornada?: string | null
+          materias_aprobadas?: number | null
+          materias_matriculadas?: number | null
+          materias_reprobadas?: number | null
+          materias_segunda_matricula?: boolean | null
+          num_semestres_perdidos?: number | null
+          numero_hijos?: number | null
+          participa_grupos?: boolean | null
+          personas_hogar?: number | null
+          practicas_pasantias?: boolean | null
+          promedio_acumulado?: number | null
+          promedio_grado11?: number | null
+          promedio_semestre?: number | null
+          puntaje_ciencias_naturales?: number | null
+          puntaje_competencias_ciudadanas?: number | null
+          puntaje_ingles?: number | null
+          puntaje_lectura_critica?: number | null
+          puntaje_pensamiento_critico?: number | null
+          puntaje_pensamiento_social?: number | null
+          puntaje_razonamiento_mat?: number | null
+          puntaje_saber11?: number | null
+          razon_interrupcion?: string | null
+          red_apoyo_familiar?: boolean | null
+          satisfaccion_carrera?: number | null
+          satisfaccion_universidad?: number | null
+          semestre_actual?: number | null
+          semestres_cursados?: number | null
+          semestres_perdidos_rendimiento?: boolean | null
+          sisben?: boolean | null
+          solicitud_retiro?: boolean | null
+          tiene_hijos?: boolean | null
+          tipo_beca?: string | null
+          tipo_colegio?: string | null
+          trabaja?: boolean | null
+          transporte?: string | null
+          trastorno_aprendizaje?: boolean | null
+          tutorias_solicitadas?: number | null
+          violencia_acoso?: boolean | null
+        }
+        Update: {
+          ano_graduacion_bach?: number | null
+          ano_ingreso?: number | null
+          asistencia_clases?: number | null
+          asistencia_psicologia?: boolean | null
+          beca_apoyo?: boolean | null
+          cabeza_hogar?: boolean | null
+          cancelaciones_materias?: number | null
+          cargue_id?: string
+          clasificacion?: string | null
+          created_at?: string
+          creditos_aprobados?: number | null
+          creditos_pendientes?: number | null
+          distancia_campus?: number | null
+          en_intervencion?: boolean | null
+          estado_civil?: string | null
+          estrato?: number | null
+          estudiante_id?: string
+          estudio_previo?: boolean | null
+          factores_principales?: string[] | null
+          horas_trabajo?: number | null
+          id?: string
+          indice_riesgo?: number | null
+          ingreso_hogar?: string | null
+          interrupciones?: boolean | null
+          jornada?: string | null
+          materias_aprobadas?: number | null
+          materias_matriculadas?: number | null
+          materias_reprobadas?: number | null
+          materias_segunda_matricula?: boolean | null
+          num_semestres_perdidos?: number | null
+          numero_hijos?: number | null
+          participa_grupos?: boolean | null
+          personas_hogar?: number | null
+          practicas_pasantias?: boolean | null
+          promedio_acumulado?: number | null
+          promedio_grado11?: number | null
+          promedio_semestre?: number | null
+          puntaje_ciencias_naturales?: number | null
+          puntaje_competencias_ciudadanas?: number | null
+          puntaje_ingles?: number | null
+          puntaje_lectura_critica?: number | null
+          puntaje_pensamiento_critico?: number | null
+          puntaje_pensamiento_social?: number | null
+          puntaje_razonamiento_mat?: number | null
+          puntaje_saber11?: number | null
+          razon_interrupcion?: string | null
+          red_apoyo_familiar?: boolean | null
+          satisfaccion_carrera?: number | null
+          satisfaccion_universidad?: number | null
+          semestre_actual?: number | null
+          semestres_cursados?: number | null
+          semestres_perdidos_rendimiento?: boolean | null
+          sisben?: boolean | null
+          solicitud_retiro?: boolean | null
+          tiene_hijos?: boolean | null
+          tipo_beca?: string | null
+          tipo_colegio?: string | null
+          trabaja?: boolean | null
+          transporte?: string | null
+          trastorno_aprendizaje?: boolean | null
+          tutorias_solicitadas?: number | null
+          violencia_acoso?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "registros_academicos_cargue_id_fkey"
+            columns: ["cargue_id"]
+            isOneToOne: false
+            referencedRelation: "cargues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "registros_academicos_estudiante_id_fkey"
+            columns: ["estudiante_id"]
+            isOneToOne: false
+            referencedRelation: "estudiantes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "administrador" | "coordinador_academico" | "consejero"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +502,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["administrador", "coordinador_academico", "consejero"],
+    },
   },
 } as const
