@@ -56,10 +56,12 @@ const CargaDatos = () => {
   const { toast } = useToast();
 
   const downloadTemplate = () => {
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet([plantillaColumnas]);
-    XLSX.utils.book_append_sheet(wb, ws, "Datos Estudiantes");
-    XLSX.writeFile(wb, "Plantilla_SIPAD_UniCartagena.xlsx");
+    const link = document.createElement("a");
+    link.href = "/Plantilla_SIPAD_UniCartagena.xlsx";
+    link.download = "Plantilla_SIPAD_UniCartagena.xlsx";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleFile = useCallback((f: File) => {
@@ -70,18 +72,33 @@ const CargaDatos = () => {
       try {
         const data = new Uint8Array(e.target?.result as ArrayBuffer);
         const wb = XLSX.read(data, { type: "array" });
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const json: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
-        setTotalRows(json.length - 1);
-        setTotalCols(json[0]?.length || 0);
-        setPreview(json.slice(0, 6));
+        const sheetName = wb.SheetNames.find((n) => n.toLowerCase().includes("datos")) || wb.SheetNames[0];
+        const ws = wb.Sheets[sheetName];
+        const json: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
+
+        // La plantilla oficial: filas 1-2 titulos, fila 3 categorias, fila 4 encabezados, fila 5+ datos
+        let headerRowIdx = json.findIndex((r) =>
+          r?.some((c) => typeof c === "string" && c.trim().toLowerCase().startsWith("codigo estudiantil"))
+        );
+        if (headerRowIdx === -1) headerRowIdx = 0;
+
+        const headers = (json[headerRowIdx] || []).filter((c) => c != null && c !== "");
+        const dataRows = json
+          .slice(headerRowIdx + 1)
+          .filter((r) => r && r.some((c) => c != null && c !== ""));
+
+        setTotalRows(dataRows.length);
+        setTotalCols(headers.length);
+        setPreview([headers, ...dataRows.slice(0, 5)]);
 
         const errs: string[] = [];
-        if (json.length < 2) errs.push("El archivo no contiene registros de datos.");
-        if (json[0]?.length < 20) errs.push("El archivo tiene menos columnas de las esperadas. Verifique que utiliza la plantilla oficial.");
+        if (dataRows.length < 1) errs.push("El archivo no contiene registros de datos.");
+        if (headers.length < NUM_COLUMNAS_OFICIALES - 5) {
+          errs.push(`El archivo tiene ${headers.length} columnas. La plantilla oficial requiere ${NUM_COLUMNAS_OFICIALES} columnas. Verifique que utiliza la plantilla SIPAD.`);
+        }
         setErrors(errs);
       } catch {
-        setErrors(["No se pudo leer el archivo. Asegurese de que es un archivo Excel valido."]);
+        setErrors(["No se pudo leer el archivo. Asegurese de que es un archivo Excel valido (.xlsx)."]);
       }
     };
     reader.readAsArrayBuffer(f);
