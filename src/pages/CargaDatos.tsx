@@ -8,34 +8,41 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import * as XLSX from "xlsx";
 
+// Encabezados oficiales SIPAD (67 columnas, identicos a la plantilla institucional)
 const plantillaColumnas = [
-  "Codigo estudiantil", "Tipo de documento", "Numero de documento", "Nombre completo",
-  "Fecha de nacimiento", "Edad", "Sexo", "Municipio de origen", "Departamento de origen",
-  "Telefono de contacto", "Correo institucional", "Programa academico", "Facultad",
-  "Semestre actual", "Ano de ingreso", "Jornada",
-  "Promedio del semestre actual", "Promedio acumulado total",
-  "Materias matriculadas semestre", "Materias aprobadas historicamente",
-  "Materias reprobadas historicamente", "Semestres cursados", "Cancelaciones de materias",
-  "Creditos acumulados aprobados", "Creditos pendientes graduacion",
-  "Razonamiento Matematico", "Pensamiento Critico", "Pensamiento Social",
-  "Lectura Critica", "Competencias Ciudadanas", "Ingles", "Ciencias Naturales",
-  "Materias en segunda matricula", "Semestres perdidos bajo rendimiento",
-  "Numero semestres perdidos",
-  "Estrato socioeconomico", "Sisben", "Beca o apoyo economico", "Tipo de beca",
-  "Trabaja actualmente", "Horas trabajo semanal", "Ingreso mensual hogar",
-  "Personas en el hogar", "Cabeza de hogar", "Distancia al campus km",
-  "Modalidad transporte",
-  "Tipo colegio bachillerato", "Promedio grado 11", "Puntaje Saber 11",
-  "Ano graduacion bachillerato", "Estudio previo universidad",
-  "Interrupciones universitarias", "Razon interrupcion",
-  "Asistencia psicologia bienestar", "Trastorno aprendizaje salud mental",
-  "Violencia o acoso reportado", "Satisfaccion con la carrera",
-  "Satisfaccion con la universidad", "Red de apoyo familiar", "Estado civil",
-  "Tiene hijos", "Numero de hijos",
-  "Participa grupos estudiantiles", "Practicas o pasantias",
-  "Tutorias solicitadas semestre", "Asistencia promedio clases",
-  "Solicitud retiro semestre",
+  "Codigo Estudiantil", "Tipo de Documento", "Numero de Documento", "Nombre Completo",
+  "Fecha de Nacimiento", "Edad", "Sexo", "Municipio de Origen", "Departamento de Origen",
+  "Telefono de Contacto", "Correo Institucional", "Programa Academico", "Facultad",
+  "Semestre Actual", "Anio de Ingreso", "Jornada",
+  "Promedio Semestre Actual", "Promedio Acumulado Total",
+  "Materias Matriculadas Semestre", "Materias Aprobadas Historico",
+  "Materias Reprobadas Historico", "Semestres Cursados", "Cancelaciones de Materias",
+  "Creditos Aprobados", "Creditos Pendientes para Graduarse",
+  "Razonamiento Matematico (0-100)", "Pensamiento Critico (0-100)",
+  "Pensamiento Social (0-100)", "Lectura Critica (0-100)",
+  "Competencias Ciudadanas (0-100)", "Ingles (0-100)", "Ciencias Naturales (0-100)",
+  "Segunda Matricula (Si/No)", "Semestres Perdidos Por Bajo Rendimiento (Si/No)",
+  "Numero de Semestres Perdidos",
+  "Estrato Socioeconomico", "Sisben (Si/No)", "Recibe Beca o Apoyo (Si/No)",
+  "Tipo de Beca o Apoyo", "Trabaja Actualmente (Si/No)", "Horas de Trabajo Semanal",
+  "Ingreso Mensual del Hogar", "Numero de Personas en el Hogar",
+  "Cabeza de Hogar (Si/No)", "Distancia Hogar-Universidad (km)", "Modalidad de Transporte",
+  "Tipo de Colegio", "Promedio Grado 11", "Puntaje Global ICFES Saber 11",
+  "Anio Graduacion Bachillerato", "Estudio Antes de la Universidad (Si/No)",
+  "Ha Tenido Interrupciones en Estudios (Si/No)", "Razon de Interrupcion Anterior",
+  "Asistio a Psicologia o Bienestar (Si/No)",
+  "Diagnostico Trastorno Aprendizaje/Salud Mental (Si/No)",
+  "Ha Reportado Violencia o Acoso (Si/No)",
+  "Satisfaccion con la Carrera (1-5)", "Satisfaccion con la Universidad (1-5)",
+  "Red de Apoyo Familiar (Si/No)", "Estado Civil",
+  "Tiene Hijos (Si/No)", "Numero de Hijos",
+  "Participa en Grupos Estudiantiles o Semilleros (Si/No)",
+  "Ha Realizado Practicas o Pasantias (Si/No)",
+  "Tutorias Solicitadas en el Semestre", "Asistencia Promedio a Clases (%)",
+  "Ha Solicitado Retiro de Semestre (Si/No)",
 ];
+
+const NUM_COLUMNAS_OFICIALES = 67;
 
 const CargaDatos = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -49,10 +56,12 @@ const CargaDatos = () => {
   const { toast } = useToast();
 
   const downloadTemplate = () => {
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.aoa_to_sheet([plantillaColumnas]);
-    XLSX.utils.book_append_sheet(wb, ws, "Datos Estudiantes");
-    XLSX.writeFile(wb, "Plantilla_SIPAD_UniCartagena.xlsx");
+    const link = document.createElement("a");
+    link.href = "/Plantilla_SIPAD_UniCartagena.xlsx";
+    link.download = "Plantilla_SIPAD_UniCartagena.xlsx";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleFile = useCallback((f: File) => {
@@ -63,18 +72,33 @@ const CargaDatos = () => {
       try {
         const data = new Uint8Array(e.target?.result as ArrayBuffer);
         const wb = XLSX.read(data, { type: "array" });
-        const ws = wb.Sheets[wb.SheetNames[0]];
-        const json: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1 });
-        setTotalRows(json.length - 1);
-        setTotalCols(json[0]?.length || 0);
-        setPreview(json.slice(0, 6));
+        const sheetName = wb.SheetNames.find((n) => n.toLowerCase().includes("datos")) || wb.SheetNames[0];
+        const ws = wb.Sheets[sheetName];
+        const json: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
+
+        // La plantilla oficial: filas 1-2 titulos, fila 3 categorias, fila 4 encabezados, fila 5+ datos
+        let headerRowIdx = json.findIndex((r) =>
+          r?.some((c) => typeof c === "string" && c.trim().toLowerCase().startsWith("codigo estudiantil"))
+        );
+        if (headerRowIdx === -1) headerRowIdx = 0;
+
+        const headers = (json[headerRowIdx] || []).filter((c) => c != null && c !== "");
+        const dataRows = json
+          .slice(headerRowIdx + 1)
+          .filter((r) => r && r.some((c) => c != null && c !== ""));
+
+        setTotalRows(dataRows.length);
+        setTotalCols(headers.length);
+        setPreview([headers, ...dataRows.slice(0, 5)]);
 
         const errs: string[] = [];
-        if (json.length < 2) errs.push("El archivo no contiene registros de datos.");
-        if (json[0]?.length < 20) errs.push("El archivo tiene menos columnas de las esperadas. Verifique que utiliza la plantilla oficial.");
+        if (dataRows.length < 1) errs.push("El archivo no contiene registros de datos.");
+        if (headers.length < NUM_COLUMNAS_OFICIALES - 5) {
+          errs.push(`El archivo tiene ${headers.length} columnas. La plantilla oficial requiere ${NUM_COLUMNAS_OFICIALES} columnas. Verifique que utiliza la plantilla SIPAD.`);
+        }
         setErrors(errs);
       } catch {
-        setErrors(["No se pudo leer el archivo. Asegurese de que es un archivo Excel valido."]);
+        setErrors(["No se pudo leer el archivo. Asegurese de que es un archivo Excel valido (.xlsx)."]);
       }
     };
     reader.readAsArrayBuffer(f);
@@ -106,9 +130,17 @@ const CargaDatos = () => {
   return (
     <AppLayout>
       <div className="space-y-6 max-w-4xl">
-        <div>
-          <h1 className="font-heading text-2xl font-bold">Carga de Datos</h1>
-          <p className="text-sm text-muted-foreground font-body">Importe archivos Excel con datos academicos de los estudiantes</p>
+        <div className="flex items-start justify-between flex-wrap gap-3">
+          <div>
+            <h1 className="font-heading text-2xl font-bold">Carga de Datos</h1>
+            <p className="text-sm text-muted-foreground font-body">Importe archivos Excel con datos academicos de los estudiantes</p>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-accent/40 bg-accent/5 rounded-md">
+            <Brain className="h-3.5 w-3.5 text-accent" />
+            <span className="text-[11px] font-body uppercase tracking-wider text-accent font-medium">
+              Procesamiento con Inteligencia Artificial
+            </span>
+          </div>
         </div>
 
         <Card>

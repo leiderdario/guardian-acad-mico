@@ -46,9 +46,17 @@ const Dashboard = () => {
   return (
     <AppLayout>
       <div className="space-y-6">
-        <div>
-          <h1 className="font-heading text-2xl font-bold text-foreground">Panel General</h1>
-          <p className="text-sm text-muted-foreground font-body">Resumen ejecutivo del estado institucional</p>
+        <div className="flex items-start justify-between flex-wrap gap-3">
+          <div>
+            <h1 className="font-heading text-2xl font-bold text-foreground">Panel General</h1>
+            <p className="text-sm text-muted-foreground font-body">Resumen ejecutivo del estado institucional</p>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-accent/40 bg-accent/5 rounded-md">
+            <Brain className="h-3.5 w-3.5 text-accent" />
+            <span className="text-[11px] font-body uppercase tracking-wider text-accent font-medium">
+              Analisis predictivo con Inteligencia Artificial
+            </span>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

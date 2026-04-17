@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Shield, LogIn } from "lucide-react";
+import { Shield, LogIn, Brain } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
@@ -39,6 +39,12 @@ const Login = () => {
           <p className="text-primary-foreground/70 text-sm font-body mt-2 leading-relaxed">
             Sistema de Prediccion y Analisis de Desercion Estudiantil
           </p>
+          <div className="inline-flex items-center gap-1.5 mt-4 px-3 py-1 border border-accent/40 rounded-full">
+            <Brain className="h-3 w-3 text-accent" />
+            <span className="text-[10px] font-body uppercase tracking-widest text-accent">
+              Plataforma con Inteligencia Artificial
+            </span>
+          </div>
         </div>
 
         <form onSubmit={handleLogin} className="bg-card rounded-lg p-8 shadow-xl space-y-5">
