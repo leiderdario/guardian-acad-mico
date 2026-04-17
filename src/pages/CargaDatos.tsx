@@ -130,9 +130,17 @@ const CargaDatos = () => {
   return (
     <AppLayout>
       <div className="space-y-6 max-w-4xl">
-        <div>
-          <h1 className="font-heading text-2xl font-bold">Carga de Datos</h1>
-          <p className="text-sm text-muted-foreground font-body">Importe archivos Excel con datos academicos de los estudiantes</p>
+        <div className="flex items-start justify-between flex-wrap gap-3">
+          <div>
+            <h1 className="font-heading text-2xl font-bold">Carga de Datos</h1>
+            <p className="text-sm text-muted-foreground font-body">Importe archivos Excel con datos academicos de los estudiantes</p>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-accent/40 bg-accent/5 rounded-md">
+            <Brain className="h-3.5 w-3.5 text-accent" />
+            <span className="text-[11px] font-body uppercase tracking-wider text-accent font-medium">
+              Procesamiento con Inteligencia Artificial
+            </span>
+          </div>
         </div>
 
         <Card>

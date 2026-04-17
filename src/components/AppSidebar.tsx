@@ -55,7 +55,7 @@ export function AppSidebar() {
                 SIPAD
               </span>
               <span className="text-[9px] text-sidebar-foreground/60 tracking-wider uppercase">
-                Sistema de Prediccion
+                Prediccion con IA
               </span>
             </div>
           )}
