@@ -5,9 +5,9 @@ import {
   History,
   FileText,
   Settings,
-  Shield,
   LogOut,
 } from "lucide-react";
+import { InstitutionalLogo } from "@/components/InstitutionalLogo";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -47,14 +47,14 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent className="bg-sidebar">
-        <div className="p-4 flex items-center gap-3 border-b border-sidebar-border">
-          <Shield className="h-8 w-8 text-sidebar-primary shrink-0" />
+        <div className="p-4 flex items-center gap-3 border-b border-sidebar-border/60">
+          <InstitutionalLogo size={collapsed ? 28 : 36} />
           {!collapsed && (
-            <div className="flex flex-col leading-tight">
-              <span className="font-heading text-sm font-bold text-sidebar-foreground">
+            <div className="flex flex-col leading-tight min-w-0">
+              <span className="font-heading text-base font-bold text-sidebar-foreground tracking-wide">
                 SIPAD
               </span>
-              <span className="text-[9px] text-sidebar-foreground/60 tracking-wider uppercase">
+              <span className="text-[9px] text-sidebar-primary/80 tracking-[0.2em] uppercase font-medium">
                 Prediccion con IA
               </span>
             </div>
