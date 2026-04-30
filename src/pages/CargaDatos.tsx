@@ -2,10 +2,11 @@ import { useState, useCallback } from "react";
 import { AppLayout } from "@/components/AppLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Upload, Download, FileSpreadsheet, CheckCircle, AlertCircle, Brain } from "lucide-react";
+import { Upload, Download, FileSpreadsheet, CheckCircle, AlertCircle, Brain, Hash, Accessibility } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { PREFIJOS_FACULTAD } from "@/lib/codificacion";
 import * as XLSX from "xlsx";
 
 // Encabezados oficiales SIPAD (67 columnas, identicos a la plantilla institucional)
@@ -161,6 +162,48 @@ const CargaDatos = () => {
             </p>
           </CardContent>
         </Card>
+
+        <div className="grid md:grid-cols-2 gap-4">
+          <Card>
+            <CardContent className="p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Hash className="h-4 w-4 text-accent" />
+                <span className="font-body font-medium text-sm">Codificacion institucional inteligente</span>
+              </div>
+              <p className="text-xs text-muted-foreground font-body mb-3">
+                Al procesar el archivo, cada estudiante recibe un codigo unico con el formato
+                <span className="font-mono mx-1 text-foreground">PREFIJO-AAAA-NNNN</span>
+                segun su facultad. No se mezclan series entre programas.
+              </p>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] font-body">
+                {Object.entries(PREFIJOS_FACULTAD).map(([fac, pref]) => (
+                  <div key={pref} className="flex items-center gap-2">
+                    <span className="font-mono text-accent w-10">{pref}</span>
+                    <span className="text-muted-foreground truncate">{fac}</span>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Accessibility className="h-4 w-4 text-accent" />
+                <span className="font-body font-medium text-sm">Deteccion de condiciones especiales</span>
+              </div>
+              <p className="text-xs text-muted-foreground font-body mb-3">
+                El sistema reconoce el campo de condicion especial declarada y marca automaticamente a los
+                estudiantes que requieren adaptaciones del entorno academico.
+              </p>
+              <div className="space-y-1 text-[11px] font-body text-muted-foreground">
+                <div>· Discapacidad visual, auditiva, motriz o cognitiva</div>
+                <div>· Condicion multiple u otra condicion declarada</div>
+                <div>· Visible en el Analisis de Riesgo y el Panel General</div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         <Card>
           <CardContent className="p-6">
