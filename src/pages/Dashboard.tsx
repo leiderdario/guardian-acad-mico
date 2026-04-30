@@ -45,11 +45,16 @@ const Dashboard = () => {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-start justify-between flex-wrap gap-3">
+      <div className="space-y-6 max-w-[1600px] mx-auto">
+        <div className="flex items-start justify-between flex-wrap gap-3 pb-4 border-b border-border">
           <div>
-            <h1 className="font-heading text-2xl font-bold text-foreground">Panel General</h1>
-            <p className="text-sm text-muted-foreground font-body">Resumen ejecutivo del estado institucional</p>
+            <div className="text-[10px] font-body uppercase tracking-[0.25em] text-accent mb-1">
+              Universidad de Cartagena · SIPAD
+            </div>
+            <h1 className="font-heading text-3xl font-bold text-foreground">Panel General</h1>
+            <p className="text-sm text-muted-foreground font-body mt-1">
+              Resumen ejecutivo del estado institucional
+            </p>
           </div>
           <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-accent/40 bg-accent/5 rounded-md">
             <Brain className="h-3.5 w-3.5 text-accent" />
@@ -61,7 +66,17 @@ const Dashboard = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
           {kpis.map((kpi) => (
-            <Card key={kpi.label} className={kpi.accent ? "border-danger/30 bg-danger/5" : ""}>
+            <Card
+              key={kpi.label}
+              className={`relative overflow-hidden transition-shadow hover:shadow-md ${
+                kpi.accent ? "border-danger/30 bg-danger/5" : ""
+              }`}
+            >
+              <span
+                className={`absolute top-0 left-0 right-0 h-0.5 ${
+                  kpi.accent ? "bg-danger" : "bg-accent"
+                }`}
+              />
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
                   <kpi.icon className={`h-4 w-4 ${kpi.accent ? "text-danger" : "text-accent"}`} />
