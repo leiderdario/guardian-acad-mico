@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Search, Eye, X } from "lucide-react";
 import { mockStudents, facultades, type Estudiante } from "@/lib/mockData";
+import { CONDICION_ESPECIAL_LABEL } from "@/lib/codificacion";
+import { CondicionEspecialBadge } from "@/components/CondicionEspecialBadge";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 function RiskBar({ value }: { value: number }) {
@@ -122,7 +124,12 @@ const AnalisisRiesgo = () => {
                 <tbody>
                   {filtered.map((s) => (
                     <tr key={s.codigo} className="border-b border-border/50 hover:bg-muted/20">
-                      <td className="p-3 font-mono text-xs">{s.codigo}</td>
+                      <td className="p-3 font-mono text-xs">
+                        <div className="flex items-center gap-2">
+                          <span>{s.codigo}</span>
+                          <CondicionEspecialBadge condicion={s.condicionEspecial} detalle={s.detalleCondicion} compact />
+                        </div>
+                      </td>
                       <td className="p-3">{s.nombre}</td>
                       <td className="p-3">
                         <div className="text-xs">{s.programa}</div>
