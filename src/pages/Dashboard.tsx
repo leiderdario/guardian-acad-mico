@@ -4,8 +4,8 @@ import {
   AlertTriangle,
   TrendingDown,
   CheckCircle,
-  Calendar,
   Brain,
+  Accessibility,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +14,7 @@ import {
   LineChart, Line, ResponsiveContainer,
 } from "recharts";
 import { mockStudents, riesgoPorFacultad, evolucionHistorica } from "@/lib/mockData";
+import { CondicionEspecialBadge } from "@/components/CondicionEspecialBadge";
 
 function RiskBar({ value }: { value: number }) {
   const color = value > 65 ? "bg-danger" : value > 30 ? "bg-warning" : "bg-success";
@@ -33,13 +34,14 @@ const Dashboard = () => {
   const medio = mockStudents.filter((s) => s.indiceRiesgo > 30 && s.indiceRiesgo <= 65).length;
   const estable = mockStudents.filter((s) => s.indiceRiesgo <= 30).length;
   const top10 = mockStudents.slice(0, 10);
+  const condicionEspecial = mockStudents.filter((s) => s.condicionEspecial !== "ninguna").length;
 
   const kpis = [
     { label: "Total Estudiantes", value: total, icon: Users, accent: false },
     { label: "Riesgo Alto / Critico", value: `${alto} (${((alto / total) * 100).toFixed(0)}%)`, icon: AlertTriangle, accent: true },
     { label: "Riesgo Moderado", value: `${medio} (${((medio / total) * 100).toFixed(0)}%)`, icon: TrendingDown, accent: false },
     { label: "Continuidad Estable", value: `${estable} (${((estable / total) * 100).toFixed(0)}%)`, icon: CheckCircle, accent: false },
-    { label: "Ultimo Cargue", value: "15/04/2025", icon: Calendar, accent: false },
+    { label: "Condicion Especial", value: `${condicionEspecial} (${((condicionEspecial / total) * 100).toFixed(0)}%)`, icon: Accessibility, accent: false },
     { label: "Precision del Modelo", value: "87.3%", icon: Brain, accent: false },
   ];
 
@@ -108,7 +110,12 @@ const Dashboard = () => {
                 <tbody>
                   {top10.map((s) => (
                     <tr key={s.codigo} className="border-b border-border/50 hover:bg-muted/30">
-                      <td className="py-2 pr-4 font-mono text-xs">{s.codigo}</td>
+                      <td className="py-2 pr-4 font-mono text-xs">
+                        <div className="flex items-center gap-2">
+                          <span>{s.codigo}</span>
+                          <CondicionEspecialBadge condicion={s.condicionEspecial} detalle={s.detalleCondicion} compact />
+                        </div>
+                      </td>
                       <td className="py-2 pr-4">{s.nombre}</td>
                       <td className="py-2 pr-4 text-xs text-muted-foreground">{s.programa}</td>
                       <td className="py-2 pr-4 text-center">{s.semestre}</td>

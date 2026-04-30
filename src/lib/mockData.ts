@@ -1,4 +1,5 @@
 // Mock data for SIPAD demonstration
+import { generarCodigoInstitucional, type CondicionEspecial } from "./codificacion";
 
 export interface Estudiante {
   codigo: string;
@@ -10,6 +11,8 @@ export interface Estudiante {
   indiceRiesgo: number;
   clasificacion: "Continuidad Estable" | "Riesgo Moderado" | "Riesgo Alto" | "Riesgo Critico";
   factores: string[];
+  condicionEspecial: CondicionEspecial;
+  detalleCondicion?: string;
 }
 
 export const facultades = [
@@ -79,17 +82,26 @@ function getRandomFactores(riesgo: number): string[] {
   return shuffled.slice(0, count);
 }
 
+const condicionesPosibles: CondicionEspecial[] = [
+  "ninguna", "ninguna", "ninguna", "ninguna", "ninguna", "ninguna", "ninguna", "ninguna",
+  "visual", "auditiva", "motriz", "cognitiva", "otra",
+];
+
 export function generateMockStudents(count: number = 30): Estudiante[] {
   const students: Estudiante[] = [];
+  // Consecutivo por facultad para codigos institucionales
+  const consecutivos: Record<string, number> = {};
   for (let i = 0; i < count; i++) {
     const facultad = facultades[Math.floor(Math.random() * facultades.length)];
     const progs = programas[facultad];
     const programa = progs[Math.floor(Math.random() * progs.length)];
     const riesgo = Math.floor(Math.random() * 100);
     const promedio = Math.max(0, Math.min(5, 5 - (riesgo / 100) * 3 + (Math.random() - 0.5)));
+    consecutivos[facultad] = (consecutivos[facultad] ?? 0) + 1;
+    const condicion = condicionesPosibles[Math.floor(Math.random() * condicionesPosibles.length)];
 
     students.push({
-      codigo: `T${String(60010001 + i)}`,
+      codigo: generarCodigoInstitucional(facultad, consecutivos[facultad], 2025),
       nombre: nombres[i % nombres.length],
       programa,
       facultad,
@@ -98,6 +110,8 @@ export function generateMockStudents(count: number = 30): Estudiante[] {
       indiceRiesgo: riesgo,
       clasificacion: getClasificacion(riesgo),
       factores: getRandomFactores(riesgo),
+      condicionEspecial: condicion,
+      detalleCondicion: condicion !== "ninguna" ? "Requiere adaptaciones del entorno academico" : undefined,
     });
   }
   return students.sort((a, b) => b.indiceRiesgo - a.indiceRiesgo);

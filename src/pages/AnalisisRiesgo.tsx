@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Search, Eye, X } from "lucide-react";
 import { mockStudents, facultades, type Estudiante } from "@/lib/mockData";
+import { CondicionEspecialBadge } from "@/components/CondicionEspecialBadge";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 function RiskBar({ value }: { value: number }) {
@@ -122,7 +123,12 @@ const AnalisisRiesgo = () => {
                 <tbody>
                   {filtered.map((s) => (
                     <tr key={s.codigo} className="border-b border-border/50 hover:bg-muted/20">
-                      <td className="p-3 font-mono text-xs">{s.codigo}</td>
+                      <td className="p-3 font-mono text-xs">
+                        <div className="flex items-center gap-2">
+                          <span>{s.codigo}</span>
+                          <CondicionEspecialBadge condicion={s.condicionEspecial} detalle={s.detalleCondicion} compact />
+                        </div>
+                      </td>
                       <td className="p-3">{s.nombre}</td>
                       <td className="p-3">
                         <div className="text-xs">{s.programa}</div>
@@ -192,6 +198,22 @@ const AnalisisRiesgo = () => {
                       </div>
                     </div>
                   </div>
+
+                  {selectedStudent.condicionEspecial !== "ninguna" && (
+                    <div className="space-y-2 border border-accent/30 bg-accent/5 rounded-md p-3">
+                      <h3 className="font-heading text-sm font-semibold text-accent">Condicion Especial Declarada</h3>
+                      <CondicionEspecialBadge
+                        condicion={selectedStudent.condicionEspecial}
+                        detalle={selectedStudent.detalleCondicion}
+                      />
+                      {selectedStudent.detalleCondicion && (
+                        <p className="text-xs font-body text-foreground/80">{selectedStudent.detalleCondicion}</p>
+                      )}
+                      <p className="text-[10px] font-body text-muted-foreground">
+                        El sistema prioriza adaptaciones del entorno academico para este estudiante.
+                      </p>
+                    </div>
+                  )}
 
                   <div className="space-y-2">
                     <h3 className="font-heading text-sm font-semibold">Historial de Riesgo</h3>
