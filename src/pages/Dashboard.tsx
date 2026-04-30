@@ -15,6 +15,7 @@ import {
   LineChart, Line, ResponsiveContainer,
 } from "recharts";
 import { mockStudents, riesgoPorFacultad, evolucionHistorica } from "@/lib/mockData";
+import { CondicionEspecialBadge } from "@/components/CondicionEspecialBadge";
 
 function RiskBar({ value }: { value: number }) {
   const color = value > 65 ? "bg-danger" : value > 30 ? "bg-warning" : "bg-success";
@@ -110,7 +111,12 @@ const Dashboard = () => {
                 <tbody>
                   {top10.map((s) => (
                     <tr key={s.codigo} className="border-b border-border/50 hover:bg-muted/30">
-                      <td className="py-2 pr-4 font-mono text-xs">{s.codigo}</td>
+                      <td className="py-2 pr-4 font-mono text-xs">
+                        <div className="flex items-center gap-2">
+                          <span>{s.codigo}</span>
+                          <CondicionEspecialBadge condicion={s.condicionEspecial} detalle={s.detalleCondicion} compact />
+                        </div>
+                      </td>
                       <td className="py-2 pr-4">{s.nombre}</td>
                       <td className="py-2 pr-4 text-xs text-muted-foreground">{s.programa}</td>
                       <td className="py-2 pr-4 text-center">{s.semestre}</td>
