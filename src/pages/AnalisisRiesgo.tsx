@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Search, Eye, X } from "lucide-react";
 import { mockStudents, facultades, type Estudiante } from "@/lib/mockData";
-import { CONDICION_ESPECIAL_LABEL } from "@/lib/codificacion";
 import { CondicionEspecialBadge } from "@/components/CondicionEspecialBadge";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
