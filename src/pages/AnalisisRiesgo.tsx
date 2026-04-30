@@ -200,6 +200,22 @@ const AnalisisRiesgo = () => {
                     </div>
                   </div>
 
+                  {selectedStudent.condicionEspecial !== "ninguna" && (
+                    <div className="space-y-2 border border-accent/30 bg-accent/5 rounded-md p-3">
+                      <h3 className="font-heading text-sm font-semibold text-accent">Condicion Especial Declarada</h3>
+                      <CondicionEspecialBadge
+                        condicion={selectedStudent.condicionEspecial}
+                        detalle={selectedStudent.detalleCondicion}
+                      />
+                      {selectedStudent.detalleCondicion && (
+                        <p className="text-xs font-body text-foreground/80">{selectedStudent.detalleCondicion}</p>
+                      )}
+                      <p className="text-[10px] font-body text-muted-foreground">
+                        El sistema prioriza adaptaciones del entorno academico para este estudiante.
+                      </p>
+                    </div>
+                  )}
+
                   <div className="space-y-2">
                     <h3 className="font-heading text-sm font-semibold">Historial de Riesgo</h3>
                     <ResponsiveContainer width="100%" height={150}>
