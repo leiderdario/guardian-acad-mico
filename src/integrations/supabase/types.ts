@@ -47,15 +47,18 @@ export type Database = {
       estudiantes: {
         Row: {
           codigo_estudiantil: string
+          condicion_especial: Database["public"]["Enums"]["condicion_especial"]
           correo_institucional: string | null
           created_at: string
           departamento_origen: string | null
+          detalle_condicion_especial: string | null
           facultad: string | null
           fecha_nacimiento: string | null
           id: string
           municipio_origen: string | null
           nombre_completo: string
           numero_documento: string | null
+          prefijo_programa: string | null
           programa_academico: string | null
           sexo: string | null
           telefono: string | null
@@ -64,15 +67,18 @@ export type Database = {
         }
         Insert: {
           codigo_estudiantil: string
+          condicion_especial?: Database["public"]["Enums"]["condicion_especial"]
           correo_institucional?: string | null
           created_at?: string
           departamento_origen?: string | null
+          detalle_condicion_especial?: string | null
           facultad?: string | null
           fecha_nacimiento?: string | null
           id?: string
           municipio_origen?: string | null
           nombre_completo: string
           numero_documento?: string | null
+          prefijo_programa?: string | null
           programa_academico?: string | null
           sexo?: string | null
           telefono?: string | null
@@ -81,15 +87,18 @@ export type Database = {
         }
         Update: {
           codigo_estudiantil?: string
+          condicion_especial?: Database["public"]["Enums"]["condicion_especial"]
           correo_institucional?: string | null
           created_at?: string
           departamento_origen?: string | null
+          detalle_condicion_especial?: string | null
           facultad?: string | null
           fecha_nacimiento?: string | null
           id?: string
           municipio_origen?: string | null
           nombre_completo?: string
           numero_documento?: string | null
+          prefijo_programa?: string | null
           programa_academico?: string | null
           sexo?: string | null
           telefono?: string | null
@@ -376,6 +385,14 @@ export type Database = {
     }
     Enums: {
       app_role: "administrador" | "coordinador_academico" | "consejero"
+      condicion_especial:
+        | "ninguna"
+        | "visual"
+        | "auditiva"
+        | "motriz"
+        | "cognitiva"
+        | "multiple"
+        | "otra"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -504,6 +521,15 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["administrador", "coordinador_academico", "consejero"],
+      condicion_especial: [
+        "ninguna",
+        "visual",
+        "auditiva",
+        "motriz",
+        "cognitiva",
+        "multiple",
+        "otra",
+      ],
     },
   },
 } as const
