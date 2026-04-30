@@ -6,6 +6,7 @@ import {
   CheckCircle,
   Calendar,
   Brain,
+  Accessibility,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -33,13 +34,14 @@ const Dashboard = () => {
   const medio = mockStudents.filter((s) => s.indiceRiesgo > 30 && s.indiceRiesgo <= 65).length;
   const estable = mockStudents.filter((s) => s.indiceRiesgo <= 30).length;
   const top10 = mockStudents.slice(0, 10);
+  const condicionEspecial = mockStudents.filter((s) => s.condicionEspecial !== "ninguna").length;
 
   const kpis = [
     { label: "Total Estudiantes", value: total, icon: Users, accent: false },
     { label: "Riesgo Alto / Critico", value: `${alto} (${((alto / total) * 100).toFixed(0)}%)`, icon: AlertTriangle, accent: true },
     { label: "Riesgo Moderado", value: `${medio} (${((medio / total) * 100).toFixed(0)}%)`, icon: TrendingDown, accent: false },
     { label: "Continuidad Estable", value: `${estable} (${((estable / total) * 100).toFixed(0)}%)`, icon: CheckCircle, accent: false },
-    { label: "Ultimo Cargue", value: "15/04/2025", icon: Calendar, accent: false },
+    { label: "Condicion Especial", value: `${condicionEspecial} (${((condicionEspecial / total) * 100).toFixed(0)}%)`, icon: Accessibility, accent: false },
     { label: "Precision del Modelo", value: "87.3%", icon: Brain, accent: false },
   ];
 
