@@ -4,7 +4,6 @@ import {
   AlertTriangle,
   TrendingDown,
   CheckCircle,
-  Calendar,
   Brain,
   Accessibility,
 } from "lucide-react";
