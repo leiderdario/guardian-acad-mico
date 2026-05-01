@@ -1,4 +1,4 @@
-// Mock data for SIPAD demonstration
+// Mock data for EduAlert demonstration
 import { generarCodigoInstitucional, type CondicionEspecial } from "./codificacion";
 
 export interface Estudiante {
@@ -101,7 +101,7 @@ export function generateMockStudents(count: number = 30): Estudiante[] {
     const condicion = condicionesPosibles[Math.floor(Math.random() * condicionesPosibles.length)];
 
     students.push({
-      codigo: generarCodigoInstitucional(facultad, consecutivos[facultad], 2025),
+      codigo: generarCodigoInstitucional(programa, consecutivos[facultad]),
       nombre: nombres[i % nombres.length],
       programa,
       facultad,

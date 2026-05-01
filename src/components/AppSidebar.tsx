@@ -52,7 +52,7 @@ export function AppSidebar() {
           {!collapsed && (
             <div className="flex flex-col leading-tight min-w-0">
               <span className="font-heading text-base font-bold text-sidebar-foreground tracking-wide">
-                SIPAD
+                EduAlert
               </span>
               <span className="text-[9px] text-sidebar-primary/80 tracking-[0.2em] uppercase font-medium">
                 Prediccion con IA

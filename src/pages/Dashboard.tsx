@@ -51,7 +51,7 @@ const Dashboard = () => {
         <div className="flex items-start justify-between flex-wrap gap-3 pb-4 border-b border-border">
           <div>
             <div className="text-[10px] font-body uppercase tracking-[0.25em] text-accent mb-1">
-              Universidad de Cartagena · SIPAD
+              Universidad de Cartagena · EduAlert
             </div>
             <h1 className="font-heading text-3xl font-bold text-foreground">Panel General</h1>
             <p className="text-sm text-muted-foreground font-body mt-1">

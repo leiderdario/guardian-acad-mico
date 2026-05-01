@@ -131,7 +131,7 @@ const Reportes = () => {
 
         <div className="bg-muted/50 border-l-2 border-accent rounded-md p-3 text-xs font-body text-muted-foreground">
           Todos los reportes exportados incluyen el escudo institucional, la fecha de generacion,
-          el identificador unico del sistema SIPAD y el sello de confidencialidad.
+          el identificador unico del sistema EduAlert y el sello de confidencialidad.
         </div>
 
         <div className="space-y-3">

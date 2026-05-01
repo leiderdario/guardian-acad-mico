@@ -117,7 +117,7 @@ const Configuracion = () => {
           </CardHeader>
           <CardContent className="text-sm font-body space-y-2">
             <p>
-              El modelo de prediccion de SIPAD utiliza un algoritmo de ponderacion multifactorial
+              El modelo de prediccion de EduAlert utiliza un algoritmo de ponderacion multifactorial
               que evalua variables academicas, socioeconomicas y psicosociales para generar un indice
               de riesgo de desercion entre 0 y 100 para cada estudiante.
             </p>

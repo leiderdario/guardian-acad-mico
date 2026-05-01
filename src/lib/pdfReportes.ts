@@ -1,4 +1,4 @@
-// Generador de reportes institucionales SIPAD - Universidad de Cartagena
+// Generador de reportes institucionales EduAlert - Universidad de Cartagena
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import escudoUrl from "@/assets/escudo-udec-placeholder.png";
@@ -10,7 +10,7 @@ const DORADO: [number, number, number] = [201, 168, 76]; // #C9A84C
 const GRIS: [number, number, number] = [90, 90, 95];
 
 const SIPAD_ID = () =>
-  "SIPAD-" +
+  "EDUALERT-" +
   new Date().toISOString().replace(/[-:T.Z]/g, "").slice(0, 14);
 
 async function loadEscudo(): Promise<string> {
@@ -51,7 +51,7 @@ async function membrete(doc: jsPDF, titulo: string, subtitulo: string) {
   doc.setFont("times", "normal");
   doc.setFontSize(8.5);
   doc.setTextColor(...GRIS);
-  doc.text("Vicerrectoria Academica  -  Sistema SIPAD", 36, 22);
+  doc.text("Vicerrectoria Academica  -  Sistema EduAlert", 36, 22);
   doc.text(
     "Sistema de Prediccion y Analisis de Desercion Estudiantil con Inteligencia Artificial",
     36,
@@ -91,7 +91,7 @@ function pieDePagina(doc: jsPDF, idReporte: string) {
     doc.setFontSize(7.5);
     doc.setTextColor(...GRIS);
     doc.text(
-      "Universidad de Cartagena  -  Documento institucional confidencial  -  SIPAD",
+      "Universidad de Cartagena  -  Documento institucional confidencial  -  EduAlert",
       14,
       pageH - 11
     );
