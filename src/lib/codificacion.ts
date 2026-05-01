@@ -1,38 +1,55 @@
-// Codificacion institucional inteligente SIPAD
-// Cada facultad genera un prefijo unico para el codigo estudiantil.
-// Formato: PREFIJO-AAAA-NNNN  (ej. ING-2025-0001, SAL-2025-0017)
+// Codificacion institucional inteligente EduAlert
+// Cada programa academico tiene un prefijo numerico unico de 4 digitos.
+// Formato: PREFIJO + NNN  (ej. 8911001, 7567023)
 
-export const PREFIJOS_FACULTAD: Record<string, string> = {
-  "Ingenieria": "ING",
-  "Ciencias Economicas": "ECO",
-  "Derecho": "DER",
-  "Medicina": "MED",
-  "Ciencias Exactas": "CEX",
-  "Ciencias Sociales": "CSO",
-  "Enfermeria": "ENF",
-  "Odontologia": "ODO",
-  "Ciencias Farmaceuticas": "FAR",
-  "Linguistica y Literatura": "LIN",
-};
+export interface ProgramaCodigo {
+  facultad: string;
+  programa: string;
+  prefijo: string; // 4 digitos
+}
 
-// Programas asociados a Ciencias de la Salud (subprefijo SAL para uso en reportes)
-const PROGRAMAS_SALUD = ["Medicina", "Enfermeria", "Odontologia", "Ciencias Farmaceuticas"];
+export const CATALOGO_PROGRAMAS: ProgramaCodigo[] = [
+  { facultad: "Medicina", programa: "Medicina", prefijo: "8911" },
+  { facultad: "Ingenieria", programa: "Ingenieria de Sistemas", prefijo: "7567" },
+  { facultad: "Ingenieria", programa: "Ingenieria Industrial", prefijo: "7569" },
+  { facultad: "Ciencias de la Salud", programa: "Enfermeria", prefijo: "4121" },
+  { facultad: "Ciencias Farmaceuticas", programa: "Quimica Farmaceutica", prefijo: "6231" },
+  { facultad: "Ciencias Economicas", programa: "Administracion de Empresas", prefijo: "5381" },
+  { facultad: "Ciencias Economicas", programa: "Contaduria Publica", prefijo: "5383" },
+  { facultad: "Ciencias Sociales y Educacion", programa: "Psicologia", prefijo: "3142" },
+  { facultad: "Ciencias Sociales y Educacion", programa: "Trabajo Social", prefijo: "3144" },
+  { facultad: "Derecho y Ciencias Politicas", programa: "Derecho", prefijo: "2711" },
+];
 
-export function obtenerPrefijoPrograma(facultad: string | null | undefined): string {
-  if (!facultad) return "GEN";
-  const f = facultad.trim();
-  if (PROGRAMAS_SALUD.includes(f)) return PREFIJOS_FACULTAD[f] ?? "SAL";
-  return PREFIJOS_FACULTAD[f] ?? f.slice(0, 3).toUpperCase();
+// Mapa rapido programa -> prefijo
+export const PREFIJOS_PROGRAMA: Record<string, string> = Object.fromEntries(
+  CATALOGO_PROGRAMAS.map((p) => [p.programa, p.prefijo])
+);
+
+// Compatibilidad: mapa de facultades (primer prefijo encontrado)
+export const PREFIJOS_FACULTAD: Record<string, string> = CATALOGO_PROGRAMAS.reduce(
+  (acc, p) => {
+    if (!acc[p.facultad]) acc[p.facultad] = p.prefijo;
+    return acc;
+  },
+  {} as Record<string, string>
+);
+
+export function obtenerPrefijoPrograma(
+  programaOFacultad: string | null | undefined
+): string {
+  if (!programaOFacultad) return "0000";
+  const v = programaOFacultad.trim();
+  return PREFIJOS_PROGRAMA[v] ?? PREFIJOS_FACULTAD[v] ?? "0000";
 }
 
 export function generarCodigoInstitucional(
-  facultad: string | null | undefined,
+  programaOFacultad: string | null | undefined,
   consecutivo: number,
-  anio: number = new Date().getFullYear(),
 ): string {
-  const prefijo = obtenerPrefijoPrograma(facultad);
-  const num = String(consecutivo).padStart(4, "0");
-  return `${prefijo}-${anio}-${num}`;
+  const prefijo = obtenerPrefijoPrograma(programaOFacultad);
+  const num = String(consecutivo).padStart(3, "0");
+  return `${prefijo}${num}`;
 }
 
 // Condiciones especiales declaradas (alineadas con el enum de la BD)
