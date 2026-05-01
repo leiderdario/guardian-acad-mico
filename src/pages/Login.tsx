@@ -47,7 +47,7 @@ const Login = () => {
             Universidad de Cartagena
           </h1>
           <div className="w-12 h-px bg-accent mx-auto my-3" />
-          <h2 className="font-heading text-3xl text-accent font-semibold tracking-[0.15em]">SIPAD</h2>
+          <h2 className="font-heading text-3xl text-accent font-semibold tracking-[0.15em]">EduAlert</h2>
           <p className="text-primary-foreground/70 text-sm font-body mt-3 leading-relaxed">
             Sistema de Prediccion y Analisis<br />de Desercion Estudiantil
           </p>
@@ -92,7 +92,7 @@ const Login = () => {
         </form>
 
         <p className="text-center text-primary-foreground/50 text-xs mt-6 font-body tracking-wide">
-          Universidad de Cartagena · SIPAD · Acceso institucional restringido
+          Universidad de Cartagena · EduAlert · Acceso institucional restringido
         </p>
       </div>
     </div>

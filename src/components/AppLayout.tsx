@@ -15,10 +15,10 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
               <InstitutionalLogo size={36} />
               <div className="flex flex-col leading-tight min-w-0">
                 <span className="font-heading text-sm md:text-[15px] font-bold text-primary tracking-wide truncate">
-                  Universidad de Cartagena
+                  EduAlert · Universidad de Cartagena
                 </span>
                 <span className="text-[10px] font-body text-muted-foreground tracking-[0.2em] uppercase">
-                  SIPAD · Sistema de Prediccion
+                  Prediccion y Analisis de Desercion
                 </span>
               </div>
             </div>

@@ -1,4 +1,4 @@
-// Generador de reportes institucionales SIPAD - Universidad de Cartagena
+// Generador de reportes institucionales EduAlert - Universidad de Cartagena
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import escudoUrl from "@/assets/escudo-udec-placeholder.png";
@@ -9,8 +9,8 @@ const AZUL: [number, number, number] = [10, 35, 66];     // #0A2342
 const DORADO: [number, number, number] = [201, 168, 76]; // #C9A84C
 const GRIS: [number, number, number] = [90, 90, 95];
 
-const SIPAD_ID = () =>
-  "SIPAD-" +
+const EDUALERT_ID = () =>
+  "EDUALERT-" +
   new Date().toISOString().replace(/[-:T.Z]/g, "").slice(0, 14);
 
 async function loadEscudo(): Promise<string> {
@@ -51,7 +51,7 @@ async function membrete(doc: jsPDF, titulo: string, subtitulo: string) {
   doc.setFont("times", "normal");
   doc.setFontSize(8.5);
   doc.setTextColor(...GRIS);
-  doc.text("Vicerrectoria Academica  -  Sistema SIPAD", 36, 22);
+  doc.text("Vicerrectoria Academica  -  Sistema EduAlert", 36, 22);
   doc.text(
     "Sistema de Prediccion y Analisis de Desercion Estudiantil con Inteligencia Artificial",
     36,
@@ -91,7 +91,7 @@ function pieDePagina(doc: jsPDF, idReporte: string) {
     doc.setFontSize(7.5);
     doc.setTextColor(...GRIS);
     doc.text(
-      "Universidad de Cartagena  -  Documento institucional confidencial  -  SIPAD",
+      "Universidad de Cartagena  -  Documento institucional confidencial  -  EduAlert",
       14,
       pageH - 11
     );
@@ -150,7 +150,7 @@ async function tablaEstudiantes(
 
 export async function reporteGeneral(estudiantes: Estudiante[]) {
   const doc = setupDoc();
-  const id = SIPAD_ID();
+  const id = EDUALERT_ID();
   await membrete(
     doc,
     "Reporte General del Ultimo Analisis",
@@ -158,12 +158,12 @@ export async function reporteGeneral(estudiantes: Estudiante[]) {
   );
   await tablaEstudiantes(doc, estudiantes);
   pieDePagina(doc, id);
-  doc.save(`SIPAD_Reporte_General_${id}.pdf`);
+  doc.save(`EduAlert_Reporte_General_${id}.pdf`);
 }
 
 export async function reporteRiesgoAlto(estudiantes: Estudiante[]) {
   const doc = setupDoc();
-  const id = SIPAD_ID();
+  const id = EDUALERT_ID();
   const criticos = estudiantes.filter(
     (e) => e.clasificacion === "Riesgo Alto" || e.clasificacion === "Riesgo Critico"
   );
@@ -174,12 +174,12 @@ export async function reporteRiesgoAlto(estudiantes: Estudiante[]) {
   );
   await tablaEstudiantes(doc, criticos);
   pieDePagina(doc, id);
-  doc.save(`SIPAD_Riesgo_Alto_${id}.pdf`);
+  doc.save(`EduAlert_Riesgo_Alto_${id}.pdf`);
 }
 
 export async function reportePorFacultad(estudiantes: Estudiante[]) {
   const doc = setupDoc();
-  const id = SIPAD_ID();
+  const id = EDUALERT_ID();
   await membrete(
     doc,
     "Reporte por Facultad",
@@ -215,14 +215,14 @@ export async function reportePorFacultad(estudiantes: Estudiante[]) {
   });
 
   pieDePagina(doc, id);
-  doc.save(`SIPAD_Por_Facultad_${id}.pdf`);
+  doc.save(`EduAlert_Por_Facultad_${id}.pdf`);
 }
 
 export async function reporteEvolucion(
   evolucion: { periodo: string; riesgoPromedio: number }[]
 ) {
   const doc = setupDoc();
-  const id = SIPAD_ID();
+  const id = EDUALERT_ID();
   await membrete(
     doc,
     "Reporte de Evolucion Historica",
@@ -242,12 +242,12 @@ export async function reporteEvolucion(
   });
 
   pieDePagina(doc, id);
-  doc.save(`SIPAD_Evolucion_${id}.pdf`);
+  doc.save(`EduAlert_Evolucion_${id}.pdf`);
 }
 
 export async function reporteIndividual(estudiante: Estudiante) {
   const doc = setupDoc();
-  const id = SIPAD_ID();
+  const id = EDUALERT_ID();
   await membrete(
     doc,
     "Reporte Individual de Estudiante",
@@ -313,5 +313,5 @@ export async function reporteIndividual(estudiante: Estudiante) {
   }
 
   pieDePagina(doc, id);
-  doc.save(`SIPAD_Individual_${estudiante.codigo}_${id}.pdf`);
+  doc.save(`EduAlert_Individual_${estudiante.codigo}_${id}.pdf`);
 }
