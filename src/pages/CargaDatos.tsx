@@ -6,10 +6,10 @@ import { Upload, Download, FileSpreadsheet, CheckCircle, AlertCircle, Brain, Has
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { PREFIJOS_FACULTAD } from "@/lib/codificacion";
+import { CATALOGO_PROGRAMAS } from "@/lib/codificacion";
 import * as XLSX from "xlsx";
 
-// Encabezados oficiales SIPAD (67 columnas, identicos a la plantilla institucional)
+// Encabezados oficiales EduAlert (67 columnas, identicos a la plantilla institucional)
 const plantillaColumnas = [
   "Codigo Estudiantil", "Tipo de Documento", "Numero de Documento", "Nombre Completo",
   "Fecha de Nacimiento", "Edad", "Sexo", "Municipio de Origen", "Departamento de Origen",
@@ -58,8 +58,8 @@ const CargaDatos = () => {
 
   const downloadTemplate = () => {
     const link = document.createElement("a");
-    link.href = "/Plantilla_SIPAD_UniCartagena.xlsx";
-    link.download = "Plantilla_SIPAD_UniCartagena.xlsx";
+    link.href = "/Plantilla_EduAlert_UniCartagena.xlsx";
+    link.download = "Plantilla_EduAlert_UniCartagena.xlsx";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -95,7 +95,7 @@ const CargaDatos = () => {
         const errs: string[] = [];
         if (dataRows.length < 1) errs.push("El archivo no contiene registros de datos.");
         if (headers.length < NUM_COLUMNAS_OFICIALES - 5) {
-          errs.push(`El archivo tiene ${headers.length} columnas. La plantilla oficial requiere ${NUM_COLUMNAS_OFICIALES} columnas. Verifique que utiliza la plantilla SIPAD.`);
+          errs.push(`El archivo tiene ${headers.length} columnas. La plantilla oficial requiere ${NUM_COLUMNAS_OFICIALES} columnas. Verifique que utiliza la plantilla EduAlert.`);
         }
         setErrors(errs);
       } catch {
@@ -168,18 +168,18 @@ const CargaDatos = () => {
             <CardContent className="p-5">
               <div className="flex items-center gap-2 mb-3">
                 <Hash className="h-4 w-4 text-accent" />
-                <span className="font-body font-medium text-sm">Codificacion institucional inteligente</span>
+                <span className="font-body font-medium text-sm">Codigos por programa academico</span>
               </div>
               <p className="text-xs text-muted-foreground font-body mb-3">
-                Al procesar el archivo, cada estudiante recibe un codigo unico con el formato
-                <span className="font-mono mx-1 text-foreground">PREFIJO-AAAA-NNNN</span>
-                segun su facultad. No se mezclan series entre programas.
+                Cada estudiante recibe un codigo unico con el formato
+                <span className="font-mono mx-1 text-foreground">PPPPNNN</span>
+                donde los primeros 4 digitos identifican el programa y los ultimos 3 son el consecutivo.
               </p>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] font-body">
-                {Object.entries(PREFIJOS_FACULTAD).map(([fac, pref]) => (
-                  <div key={pref} className="flex items-center gap-2">
-                    <span className="font-mono text-accent w-10">{pref}</span>
-                    <span className="text-muted-foreground truncate">{fac}</span>
+              <div className="space-y-1 text-[11px] font-body max-h-44 overflow-auto pr-1">
+                {CATALOGO_PROGRAMAS.map((p) => (
+                  <div key={p.prefijo} className="flex items-center gap-2">
+                    <span className="font-mono text-accent w-14 shrink-0">{p.prefijo}XXX</span>
+                    <span className="text-muted-foreground truncate">{p.programa}</span>
                   </div>
                 ))}
               </div>
