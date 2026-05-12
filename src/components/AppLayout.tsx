@@ -1,7 +1,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { InstitutionalLogo } from "@/components/InstitutionalLogo";
-import { Brain } from "lucide-react";
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -9,7 +8,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar />
         <div className="flex-1 flex flex-col min-w-0">
-          <header className="h-16 flex items-center border-b border-border bg-card px-4 md:px-6 shrink-0 shadow-[0_1px_0_0_hsl(var(--accent)/0.15)]">
+          <header className="h-16 flex items-center border-b border-border bg-card px-4 md:px-6 shrink-0 shadow-[0_2px_0_0_hsl(var(--accent)/0.35)]">
             <SidebarTrigger className="mr-3 md:mr-4" />
             <div className="flex items-center gap-3 min-w-0">
               <InstitutionalLogo size={36} />
@@ -21,12 +20,6 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
                   Prediccion y Analisis de Desercion
                 </span>
               </div>
-            </div>
-            <div className="ml-auto hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 border border-accent/40 bg-accent/5 rounded-full">
-              <Brain className="h-3 w-3 text-accent" />
-              <span className="text-[10px] font-body uppercase tracking-widest text-accent font-medium">
-                Inteligencia Artificial
-              </span>
             </div>
           </header>
           <main className="flex-1 overflow-auto p-6">
