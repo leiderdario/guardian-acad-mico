@@ -65,104 +65,155 @@ const AnalisisRiesgo = () => {
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div>
+  const grupos: { key: Estudiante["clasificacion"]; color: string; barra: string }[] = [
+    { key: "Riesgo Critico", color: "border-danger/40 bg-danger/5", barra: "bg-danger" },
+    { key: "Riesgo Alto", color: "border-danger/30 bg-danger/5", barra: "bg-danger/80" },
+    { key: "Riesgo Moderado", color: "border-warning/30 bg-warning/5", barra: "bg-warning" },
+    { key: "Continuidad Estable", color: "border-success/30 bg-success/5", barra: "bg-success" },
+  ];
+
+  return (
+    <AppLayout>
+      <div className="space-y-5">
+        <div className="rounded-lg border border-border bg-gradient-to-r from-primary to-[hsl(var(--teal))] text-primary-foreground p-5 shadow-md">
           <h1 className="font-heading text-2xl font-bold">Analisis de Riesgo</h1>
-          <p className="text-sm text-muted-foreground font-body">Resultados del ultimo analisis por estudiante</p>
+          <p className="text-sm font-body text-primary-foreground/80">
+            Resultados del ultimo analisis por estudiante. Despliegue cada categoria para revisarla.
+          </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          <div className="relative flex-1 min-w-[200px] max-w-sm">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar por nombre o codigo..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 font-body text-sm"
-            />
-          </div>
-          <Select value={facultadFilter} onValueChange={setFacultadFilter}>
-            <SelectTrigger className="w-48 font-body text-sm">
-              <SelectValue placeholder="Facultad" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todas">Todas las facultades</SelectItem>
-              {facultades.map((f) => <SelectItem key={f} value={f}>{f}</SelectItem>)}
-            </SelectContent>
-          </Select>
-          <Select value={riesgoFilter} onValueChange={setRiesgoFilter}>
-            <SelectTrigger className="w-44 font-body text-sm">
-              <SelectValue placeholder="Nivel de riesgo" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="todos">Todos los niveles</SelectItem>
-              <SelectItem value="critico">Riesgo Critico</SelectItem>
-              <SelectItem value="alto">Riesgo Alto</SelectItem>
-              <SelectItem value="moderado">Riesgo Moderado</SelectItem>
-              <SelectItem value="estable">Continuidad Estable</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <Collapsible defaultOpen>
+          <Card>
+            <CollapsibleTrigger className="w-full group">
+              <CardHeader className="py-3 flex flex-row items-center justify-between">
+                <CardTitle className="font-heading text-sm flex items-center gap-2 text-primary">
+                  <Filter className="h-4 w-4" /> Filtros de Busqueda
+                </CardTitle>
+                <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-data-[state=closed]:-rotate-90" />
+              </CardHeader>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <CardContent className="pt-0">
+                <div className="flex flex-wrap gap-3">
+                  <div className="relative flex-1 min-w-[200px] max-w-sm">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Buscar por nombre o codigo..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="pl-9 font-body text-sm"
+                    />
+                  </div>
+                  <Select value={facultadFilter} onValueChange={setFacultadFilter}>
+                    <SelectTrigger className="w-48 font-body text-sm">
+                      <SelectValue placeholder="Facultad" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="todas">Todas las facultades</SelectItem>
+                      {facultades.map((f) => <SelectItem key={f} value={f}>{f}</SelectItem>)}
+                    </SelectContent>
+                  </Select>
+                  <Select value={riesgoFilter} onValueChange={setRiesgoFilter}>
+                    <SelectTrigger className="w-44 font-body text-sm">
+                      <SelectValue placeholder="Nivel de riesgo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="todos">Todos los niveles</SelectItem>
+                      <SelectItem value="critico">Riesgo Critico</SelectItem>
+                      <SelectItem value="alto">Riesgo Alto</SelectItem>
+                      <SelectItem value="moderado">Riesgo Moderado</SelectItem>
+                      <SelectItem value="estable">Continuidad Estable</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </CardContent>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
-        <Card>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm font-body">
-                <thead>
-                  <tr className="border-b bg-muted/30 text-left text-xs text-muted-foreground">
-                    <th className="p-3">Codigo</th>
-                    <th className="p-3">Nombre</th>
-                    <th className="p-3">Programa / Facultad</th>
-                    <th className="p-3">Sem.</th>
-                    <th className="p-3">Prom.</th>
-                    <th className="p-3">Riesgo</th>
-                    <th className="p-3">Clasificacion</th>
-                    <th className="p-3">Factores Principales</th>
-                    <th className="p-3">Accion</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((s) => (
-                    <tr key={s.codigo} className="border-b border-border/50 hover:bg-muted/20">
-                      <td className="p-3 font-mono text-xs">
-                        <div className="flex items-center gap-2">
-                          <span>{s.codigo}</span>
-                          <CondicionEspecialBadge condicion={s.condicionEspecial} detalle={s.detalleCondicion} compact />
-                        </div>
-                      </td>
-                      <td className="p-3">{s.nombre}</td>
-                      <td className="p-3">
-                        <div className="text-xs">{s.programa}</div>
-                        <div className="text-[10px] text-muted-foreground">{s.facultad}</div>
-                      </td>
-                      <td className="p-3 text-center">{s.semestre}</td>
-                      <td className="p-3 text-center">{s.promedioAcumulado}</td>
-                      <td className="p-3"><RiskBar value={s.indiceRiesgo} /></td>
-                      <td className="p-3"><ClasificacionBadge clasificacion={s.clasificacion} /></td>
-                      <td className="p-3">
-                        <div className="flex flex-wrap gap-1">
-                          {s.factores.map((f, i) => (
-                            <Badge key={i} variant="outline" className="text-[9px] font-normal">{f}</Badge>
+        {grupos.map((g) => {
+          const items = filtered.filter((s) => s.clasificacion === g.key);
+          if (items.length === 0) return null;
+          const isCritico = g.key === "Riesgo Critico" || g.key === "Riesgo Alto";
+          return (
+            <Collapsible key={g.key} defaultOpen={isCritico}>
+              <Card className={`overflow-hidden ${g.color}`}>
+                <CollapsibleTrigger className="w-full group">
+                  <CardHeader className="py-3 flex flex-row items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <span className={`inline-block w-1 h-6 rounded ${g.barra}`} />
+                      <CardTitle className="font-heading text-sm text-primary">
+                        {g.key}
+                      </CardTitle>
+                      <Badge variant="outline" className="text-[10px]">{items.length}</Badge>
+                    </div>
+                    <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-data-[state=closed]:-rotate-90" />
+                  </CardHeader>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <CardContent className="p-0 bg-card">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm font-body">
+                        <thead>
+                          <tr className="border-b bg-muted/40 text-left text-xs text-muted-foreground">
+                            <th className="p-3">Codigo</th>
+                            <th className="p-3">Nombre</th>
+                            <th className="p-3">Programa / Facultad</th>
+                            <th className="p-3">Sem.</th>
+                            <th className="p-3">Prom.</th>
+                            <th className="p-3">Riesgo</th>
+                            <th className="p-3">Factores</th>
+                            <th className="p-3">Accion</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {items.map((s) => (
+                            <tr key={s.codigo} className="border-b border-border/50 hover:bg-secondary/40">
+                              <td className="p-3 font-mono text-xs">
+                                <div className="flex items-center gap-2">
+                                  <span>{s.codigo}</span>
+                                  <CondicionEspecialBadge condicion={s.condicionEspecial} detalle={s.detalleCondicion} compact />
+                                </div>
+                              </td>
+                              <td className="p-3">{s.nombre}</td>
+                              <td className="p-3">
+                                <div className="text-xs">{s.programa}</div>
+                                <div className="text-[10px] text-muted-foreground">{s.facultad}</div>
+                              </td>
+                              <td className="p-3 text-center">{s.semestre}</td>
+                              <td className="p-3 text-center">{s.promedioAcumulado}</td>
+                              <td className="p-3"><RiskBar value={s.indiceRiesgo} /></td>
+                              <td className="p-3">
+                                <div className="flex flex-wrap gap-1">
+                                  {s.factores.map((f, i) => (
+                                    <Badge key={i} variant="outline" className="text-[9px] font-normal">{f}</Badge>
+                                  ))}
+                                </div>
+                              </td>
+                              <td className="p-3">
+                                <Button variant="ghost" size="sm" onClick={() => setSelectedStudent(s)} className="h-7 text-xs">
+                                  <Eye className="mr-1 h-3 w-3" /> Ver perfil
+                                </Button>
+                              </td>
+                            </tr>
                           ))}
-                        </div>
-                      </td>
-                      <td className="p-3">
-                        <Button variant="ghost" size="sm" onClick={() => setSelectedStudent(s)} className="h-7 text-xs">
-                          <Eye className="mr-1 h-3 w-3" /> Ver perfil
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            {filtered.length === 0 && (
-              <div className="p-8 text-center text-sm text-muted-foreground font-body">
-                No se encontraron estudiantes con los filtros aplicados.
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                        </tbody>
+                      </table>
+                    </div>
+                  </CardContent>
+                </CollapsibleContent>
+              </Card>
+            </Collapsible>
+          );
+        })}
+
+        {filtered.length === 0 && (
+          <Card>
+            <CardContent className="p-8 text-center text-sm text-muted-foreground font-body">
+              No se encontraron estudiantes con los filtros aplicados.
+            </CardContent>
+          </Card>
+        )}
 
         <Sheet open={!!selectedStudent} onOpenChange={() => setSelectedStudent(null)}>
           <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
