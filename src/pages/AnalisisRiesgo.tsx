@@ -63,8 +63,6 @@ const AnalisisRiesgo = () => {
     return matchSearch && matchFacultad && matchRiesgo;
   });
 
-  return (
-    <AppLayout>
   const grupos: { key: Estudiante["clasificacion"]; color: string; barra: string }[] = [
     { key: "Riesgo Critico", color: "border-danger/40 bg-danger/5", barra: "bg-danger" },
     { key: "Riesgo Alto", color: "border-danger/30 bg-danger/5", barra: "bg-danger/80" },
