@@ -10,6 +10,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Search, Eye, ChevronDown, Filter } from "lucide-react";
 import { mockStudents, facultades, type Estudiante } from "@/lib/mockData";
 import { CondicionEspecialBadge } from "@/components/CondicionEspecialBadge";
+import { FacultadCodigoChip } from "@/components/FacultadCodigoChip";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 function RiskBar({ value }: { value: number }) {
@@ -154,9 +155,9 @@ const AnalisisRiesgo = () => {
                       <table className="w-full text-sm font-body">
                         <thead>
                           <tr className="border-b bg-muted/40 text-left text-xs text-muted-foreground">
-                            <th className="p-3">Codigo</th>
+                            <th className="p-3">Facultad / Codigo</th>
                             <th className="p-3">Nombre</th>
-                            <th className="p-3">Programa / Facultad</th>
+                            <th className="p-3">Programa</th>
                             <th className="p-3">Sem.</th>
                             <th className="p-3">Prom.</th>
                             <th className="p-3">Riesgo</th>
@@ -167,17 +168,14 @@ const AnalisisRiesgo = () => {
                         <tbody>
                           {items.map((s) => (
                             <tr key={s.codigo} className="border-b border-border/50 hover:bg-secondary/40">
-                              <td className="p-3 font-mono text-xs">
+                              <td className="p-3">
                                 <div className="flex items-center gap-2">
-                                  <span>{s.codigo}</span>
+                                  <FacultadCodigoChip facultad={s.facultad} codigo={s.codigo} />
                                   <CondicionEspecialBadge condicion={s.condicionEspecial} detalle={s.detalleCondicion} compact />
                                 </div>
                               </td>
                               <td className="p-3">{s.nombre}</td>
-                              <td className="p-3">
-                                <div className="text-xs">{s.programa}</div>
-                                <div className="text-[10px] text-muted-foreground">{s.facultad}</div>
-                              </td>
+                              <td className="p-3 text-xs text-muted-foreground">{s.programa}</td>
                               <td className="p-3 text-center">{s.semestre}</td>
                               <td className="p-3 text-center">{s.promedioAcumulado}</td>
                               <td className="p-3"><RiskBar value={s.indiceRiesgo} /></td>

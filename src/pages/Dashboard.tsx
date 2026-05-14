@@ -17,6 +17,7 @@ import {
 } from "recharts";
 import { mockStudents, riesgoPorFacultad, evolucionHistorica } from "@/lib/mockData";
 import { CondicionEspecialBadge } from "@/components/CondicionEspecialBadge";
+import { FacultadCodigoChip } from "@/components/FacultadCodigoChip";
 
 function RiskBar({ value }: { value: number }) {
   const color = value > 65 ? "bg-danger" : value > 30 ? "bg-warning" : "bg-success";
@@ -99,7 +100,7 @@ const Dashboard = () => {
                   <table className="w-full text-sm font-body">
                     <thead>
                       <tr className="border-b text-left text-muted-foreground text-xs">
-                        <th className="pb-2 pr-4">Codigo</th>
+                        <th className="pb-2 pr-4">Facultad / Codigo</th>
                         <th className="pb-2 pr-4">Nombre</th>
                         <th className="pb-2 pr-4">Programa</th>
                         <th className="pb-2 pr-4">Sem.</th>
@@ -110,9 +111,9 @@ const Dashboard = () => {
                     <tbody>
                       {top10.map((s) => (
                         <tr key={s.codigo} className="border-b border-border/50 hover:bg-secondary/40">
-                          <td className="py-2 pr-4 font-mono text-xs">
+                          <td className="py-2 pr-4">
                             <div className="flex items-center gap-2">
-                              <span>{s.codigo}</span>
+                              <FacultadCodigoChip facultad={s.facultad} codigo={s.codigo} />
                               <CondicionEspecialBadge condicion={s.condicionEspecial} detalle={s.detalleCondicion} compact />
                             </div>
                           </td>
