@@ -6,6 +6,7 @@ import {
   FileText,
   Settings,
   LogOut,
+  GaugeCircle,
 } from "lucide-react";
 import { InstitutionalLogo } from "@/components/InstitutionalLogo";
 import { NavLink } from "@/components/NavLink";
@@ -28,6 +29,7 @@ const items = [
   { title: "Panel General", url: "/dashboard", icon: LayoutDashboard },
   { title: "Carga de Datos", url: "/carga", icon: Upload },
   { title: "Analisis de Riesgo", url: "/analisis", icon: AlertTriangle },
+  { title: "Validacion del Modelo", url: "/validacion", icon: GaugeCircle },
   { title: "Historial y Seguimiento", url: "/historial", icon: History },
   { title: "Reportes", url: "/reportes", icon: FileText },
   { title: "Configuracion", url: "/configuracion", icon: Settings },
