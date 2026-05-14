@@ -10,6 +10,7 @@ import AnalisisRiesgo from "./pages/AnalisisRiesgo";
 import Historial from "./pages/Historial";
 import Reportes from "./pages/Reportes";
 import Configuracion from "./pages/Configuracion";
+import ValidacionModelo from "./pages/ValidacionModelo";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/carga" element={<CargaDatos />} />
           <Route path="/analisis" element={<AnalisisRiesgo />} />
+          <Route path="/validacion" element={<ValidacionModelo />} />
           <Route path="/historial" element={<Historial />} />
           <Route path="/reportes" element={<Reportes />} />
           <Route path="/configuracion" element={<Configuracion />} />
