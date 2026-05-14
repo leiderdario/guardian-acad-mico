@@ -56,9 +56,9 @@ const CargaDatos = () => {
         const ws = wb.Sheets[sheetName];
         const json: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
 
-        // La plantilla oficial: filas 1-2 titulos, fila 3 categorias, fila 4 encabezados, fila 5+ datos
+        // La plantilla simplificada: fila 1 titulo, fila 2 encabezados, fila 3+ datos.
         let headerRowIdx = json.findIndex((r) =>
-          r?.some((c) => typeof c === "string" && c.trim().toLowerCase().startsWith("codigo estudiantil"))
+          r?.some((c) => typeof c === "string" && c.trim().toLowerCase() === "facultad")
         );
         if (headerRowIdx === -1) headerRowIdx = 0;
 
@@ -73,8 +73,8 @@ const CargaDatos = () => {
 
         const errs: string[] = [];
         if (dataRows.length < 1) errs.push("El archivo no contiene registros de datos.");
-        if (headers.length < NUM_COLUMNAS_OFICIALES - 5) {
-          errs.push(`El archivo tiene ${headers.length} columnas. La plantilla oficial requiere ${NUM_COLUMNAS_OFICIALES} columnas. Verifique que utiliza la plantilla EduAlert.`);
+        if (headers.length < NUM_COLUMNAS_OFICIALES - 2 || headers.length > NUM_COLUMNAS_OFICIALES + 2) {
+          errs.push(`El archivo tiene ${headers.length} columnas. La plantilla oficial requiere ${NUM_COLUMNAS_OFICIALES} columnas. Verifique que utiliza la plantilla EduAlert simplificada.`);
         }
         setErrors(errs);
       } catch {
@@ -136,8 +136,12 @@ const CargaDatos = () => {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground font-body">
-              El archivo debe seguir la estructura de la plantilla oficial con {plantillaColumnas.length} columnas organizadas por categorias:
-              Identificacion, Rendimiento Academico, Situacion Socioeconomica, Antecedentes, Factores Psicosociales y Participacion Institucional.
+              La plantilla simplificada contiene <strong>{plantillaColumnas.length} columnas</strong> agrupadas en
+              4 bloques: <strong>Identificacion</strong> (Facultad, Codigo, Nombre, Programa, Semestre),
+              <strong> Rendimiento Academico</strong> (Promedio, Materias Reprobadas, Semestres Perdidos, Retiros, Asistencia),
+              <strong> Factores Socioeconomicos</strong> (Trabaja, Estrato, Beca) y
+              <strong> Bienestar</strong> (Satisfaccion con la carrera y la universidad).
+              Solo se conservaron las variables con poder predictivo real sobre la desercion.
             </p>
           </CardContent>
         </Card>
