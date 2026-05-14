@@ -52,6 +52,28 @@ export function generarCodigoInstitucional(
   return `${prefijo}${num}`;
 }
 
+// Paleta de color por facultad: dark = chip de Facultad, light = chip de Codigo
+export const COLORES_FACULTAD: Record<string, { dark: string; light: string; text: string }> = {
+  "Medicina":                       { dark: "#7A1F2B", light: "#F4D7DB", text: "#7A1F2B" },
+  "Ingenieria":                     { dark: "#1B3A6B", light: "#D6E1F0", text: "#1B3A6B" },
+  "Ciencias de la Salud":           { dark: "#2E7D6B", light: "#D4ECE5", text: "#1F5448" },
+  "Enfermeria":                     { dark: "#2E7D6B", light: "#D4ECE5", text: "#1F5448" },
+  "Ciencias Farmaceuticas":         { dark: "#5B3A8E", light: "#E2D6F0", text: "#3F2766" },
+  "Ciencias Economicas":            { dark: "#8E6B1F", light: "#F0E5C7", text: "#5F4612" },
+  "Ciencias Sociales y Educacion":  { dark: "#8E4A1F", light: "#F0DDC7", text: "#5F3214" },
+  "Ciencias Sociales":              { dark: "#8E4A1F", light: "#F0DDC7", text: "#5F3214" },
+  "Derecho y Ciencias Politicas":   { dark: "#3B3B3B", light: "#DDDDDD", text: "#1F1F1F" },
+  "Derecho":                        { dark: "#3B3B3B", light: "#DDDDDD", text: "#1F1F1F" },
+  "Ciencias Exactas":               { dark: "#1F5E8E", light: "#D6E5F0", text: "#143E5F" },
+  "Odontologia":                    { dark: "#5B7A1F", light: "#E2EFC7", text: "#3D5212" },
+  "Linguistica y Literatura":       { dark: "#7A1F5B", light: "#F0D6E5", text: "#52143D" },
+};
+
+export function getColorFacultad(f: string | null | undefined) {
+  if (!f) return { dark: "#444444", light: "#DDDDDD", text: "#1F1F1F" };
+  return COLORES_FACULTAD[f] ?? { dark: "#444444", light: "#DDDDDD", text: "#1F1F1F" };
+}
+
 // Condiciones especiales declaradas (alineadas con el enum de la BD)
 export type CondicionEspecial =
   | "ninguna"

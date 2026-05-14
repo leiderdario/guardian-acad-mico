@@ -9,41 +9,20 @@ import { useToast } from "@/hooks/use-toast";
 import { CATALOGO_PROGRAMAS } from "@/lib/codificacion";
 import * as XLSX from "xlsx";
 
-// Encabezados oficiales EduAlert (67 columnas, identicos a la plantilla institucional)
+// Encabezados oficiales EduAlert (15 columnas - plantilla simplificada que prioriza
+// solo las variables que realmente predicen desercion).
 const plantillaColumnas = [
-  "Codigo Estudiantil", "Tipo de Documento", "Numero de Documento", "Nombre Completo",
-  "Fecha de Nacimiento", "Edad", "Sexo", "Municipio de Origen", "Departamento de Origen",
-  "Telefono de Contacto", "Correo Institucional", "Programa Academico", "Facultad",
-  "Semestre Actual", "Anio de Ingreso", "Jornada",
-  "Promedio Semestre Actual", "Promedio Acumulado Total",
-  "Materias Matriculadas Semestre", "Materias Aprobadas Historico",
-  "Materias Reprobadas Historico", "Semestres Cursados", "Cancelaciones de Materias",
-  "Creditos Aprobados", "Creditos Pendientes para Graduarse",
-  "Razonamiento Matematico (0-100)", "Pensamiento Critico (0-100)",
-  "Pensamiento Social (0-100)", "Lectura Critica (0-100)",
-  "Competencias Ciudadanas (0-100)", "Ingles (0-100)", "Ciencias Naturales (0-100)",
-  "Segunda Matricula (Si/No)", "Semestres Perdidos Por Bajo Rendimiento (Si/No)",
-  "Numero de Semestres Perdidos",
-  "Estrato Socioeconomico", "Sisben (Si/No)", "Recibe Beca o Apoyo (Si/No)",
-  "Tipo de Beca o Apoyo", "Trabaja Actualmente (Si/No)", "Horas de Trabajo Semanal",
-  "Ingreso Mensual del Hogar", "Numero de Personas en el Hogar",
-  "Cabeza de Hogar (Si/No)", "Distancia Hogar-Universidad (km)", "Modalidad de Transporte",
-  "Tipo de Colegio", "Promedio Grado 11", "Puntaje Global ICFES Saber 11",
-  "Anio Graduacion Bachillerato", "Estudio Antes de la Universidad (Si/No)",
-  "Ha Tenido Interrupciones en Estudios (Si/No)", "Razon de Interrupcion Anterior",
-  "Asistio a Psicologia o Bienestar (Si/No)",
-  "Diagnostico Trastorno Aprendizaje/Salud Mental (Si/No)",
-  "Ha Reportado Violencia o Acoso (Si/No)",
-  "Satisfaccion con la Carrera (1-5)", "Satisfaccion con la Universidad (1-5)",
-  "Red de Apoyo Familiar (Si/No)", "Estado Civil",
-  "Tiene Hijos (Si/No)", "Numero de Hijos",
-  "Participa en Grupos Estudiantiles o Semilleros (Si/No)",
-  "Ha Realizado Practicas o Pasantias (Si/No)",
-  "Tutorias Solicitadas en el Semestre", "Asistencia Promedio a Clases (%)",
-  "Ha Solicitado Retiro de Semestre (Si/No)",
+  // Identificacion
+  "Facultad", "Codigo", "Nombre Completo", "Programa", "Semestre",
+  // Rendimiento academico
+  "Promedio Acum.", "Mat. Reprobadas", "Sem. Perdidos", "Retiro Sem.", "Asistencia (%)",
+  // Factores socioeconomicos
+  "Trabaja", "Estrato", "Beca/Apoyo",
+  // Bienestar
+  "Satisf. Carrera", "Satisf. Univ.",
 ];
 
-const NUM_COLUMNAS_OFICIALES = 67;
+const NUM_COLUMNAS_OFICIALES = 15;
 
 const CargaDatos = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -77,9 +56,9 @@ const CargaDatos = () => {
         const ws = wb.Sheets[sheetName];
         const json: any[][] = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null });
 
-        // La plantilla oficial: filas 1-2 titulos, fila 3 categorias, fila 4 encabezados, fila 5+ datos
+        // La plantilla simplificada: fila 1 titulo, fila 2 encabezados, fila 3+ datos.
         let headerRowIdx = json.findIndex((r) =>
-          r?.some((c) => typeof c === "string" && c.trim().toLowerCase().startsWith("codigo estudiantil"))
+          r?.some((c) => typeof c === "string" && c.trim().toLowerCase() === "facultad")
         );
         if (headerRowIdx === -1) headerRowIdx = 0;
 
@@ -94,8 +73,8 @@ const CargaDatos = () => {
 
         const errs: string[] = [];
         if (dataRows.length < 1) errs.push("El archivo no contiene registros de datos.");
-        if (headers.length < NUM_COLUMNAS_OFICIALES - 5) {
-          errs.push(`El archivo tiene ${headers.length} columnas. La plantilla oficial requiere ${NUM_COLUMNAS_OFICIALES} columnas. Verifique que utiliza la plantilla EduAlert.`);
+        if (headers.length < NUM_COLUMNAS_OFICIALES - 2 || headers.length > NUM_COLUMNAS_OFICIALES + 2) {
+          errs.push(`El archivo tiene ${headers.length} columnas. La plantilla oficial requiere ${NUM_COLUMNAS_OFICIALES} columnas. Verifique que utiliza la plantilla EduAlert simplificada.`);
         }
         setErrors(errs);
       } catch {
@@ -157,8 +136,12 @@ const CargaDatos = () => {
               </Button>
             </div>
             <p className="text-xs text-muted-foreground font-body">
-              El archivo debe seguir la estructura de la plantilla oficial con {plantillaColumnas.length} columnas organizadas por categorias:
-              Identificacion, Rendimiento Academico, Situacion Socioeconomica, Antecedentes, Factores Psicosociales y Participacion Institucional.
+              La plantilla simplificada contiene <strong>{plantillaColumnas.length} columnas</strong> agrupadas en
+              4 bloques: <strong>Identificacion</strong> (Facultad, Codigo, Nombre, Programa, Semestre),
+              <strong> Rendimiento Academico</strong> (Promedio, Materias Reprobadas, Semestres Perdidos, Retiros, Asistencia),
+              <strong> Factores Socioeconomicos</strong> (Trabaja, Estrato, Beca) y
+              <strong> Bienestar</strong> (Satisfaccion con la carrera y la universidad).
+              Solo se conservaron las variables con poder predictivo real sobre la desercion.
             </p>
           </CardContent>
         </Card>
