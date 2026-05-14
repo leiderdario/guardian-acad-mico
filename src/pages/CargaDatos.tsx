@@ -9,41 +9,20 @@ import { useToast } from "@/hooks/use-toast";
 import { CATALOGO_PROGRAMAS } from "@/lib/codificacion";
 import * as XLSX from "xlsx";
 
-// Encabezados oficiales EduAlert (67 columnas, identicos a la plantilla institucional)
+// Encabezados oficiales EduAlert (15 columnas - plantilla simplificada que prioriza
+// solo las variables que realmente predicen desercion).
 const plantillaColumnas = [
-  "Codigo Estudiantil", "Tipo de Documento", "Numero de Documento", "Nombre Completo",
-  "Fecha de Nacimiento", "Edad", "Sexo", "Municipio de Origen", "Departamento de Origen",
-  "Telefono de Contacto", "Correo Institucional", "Programa Academico", "Facultad",
-  "Semestre Actual", "Anio de Ingreso", "Jornada",
-  "Promedio Semestre Actual", "Promedio Acumulado Total",
-  "Materias Matriculadas Semestre", "Materias Aprobadas Historico",
-  "Materias Reprobadas Historico", "Semestres Cursados", "Cancelaciones de Materias",
-  "Creditos Aprobados", "Creditos Pendientes para Graduarse",
-  "Razonamiento Matematico (0-100)", "Pensamiento Critico (0-100)",
-  "Pensamiento Social (0-100)", "Lectura Critica (0-100)",
-  "Competencias Ciudadanas (0-100)", "Ingles (0-100)", "Ciencias Naturales (0-100)",
-  "Segunda Matricula (Si/No)", "Semestres Perdidos Por Bajo Rendimiento (Si/No)",
-  "Numero de Semestres Perdidos",
-  "Estrato Socioeconomico", "Sisben (Si/No)", "Recibe Beca o Apoyo (Si/No)",
-  "Tipo de Beca o Apoyo", "Trabaja Actualmente (Si/No)", "Horas de Trabajo Semanal",
-  "Ingreso Mensual del Hogar", "Numero de Personas en el Hogar",
-  "Cabeza de Hogar (Si/No)", "Distancia Hogar-Universidad (km)", "Modalidad de Transporte",
-  "Tipo de Colegio", "Promedio Grado 11", "Puntaje Global ICFES Saber 11",
-  "Anio Graduacion Bachillerato", "Estudio Antes de la Universidad (Si/No)",
-  "Ha Tenido Interrupciones en Estudios (Si/No)", "Razon de Interrupcion Anterior",
-  "Asistio a Psicologia o Bienestar (Si/No)",
-  "Diagnostico Trastorno Aprendizaje/Salud Mental (Si/No)",
-  "Ha Reportado Violencia o Acoso (Si/No)",
-  "Satisfaccion con la Carrera (1-5)", "Satisfaccion con la Universidad (1-5)",
-  "Red de Apoyo Familiar (Si/No)", "Estado Civil",
-  "Tiene Hijos (Si/No)", "Numero de Hijos",
-  "Participa en Grupos Estudiantiles o Semilleros (Si/No)",
-  "Ha Realizado Practicas o Pasantias (Si/No)",
-  "Tutorias Solicitadas en el Semestre", "Asistencia Promedio a Clases (%)",
-  "Ha Solicitado Retiro de Semestre (Si/No)",
+  // Identificacion
+  "Facultad", "Codigo", "Nombre Completo", "Programa", "Semestre",
+  // Rendimiento academico
+  "Promedio Acum.", "Mat. Reprobadas", "Sem. Perdidos", "Retiro Sem.", "Asistencia (%)",
+  // Factores socioeconomicos
+  "Trabaja", "Estrato", "Beca/Apoyo",
+  // Bienestar
+  "Satisf. Carrera", "Satisf. Univ.",
 ];
 
-const NUM_COLUMNAS_OFICIALES = 67;
+const NUM_COLUMNAS_OFICIALES = 15;
 
 const CargaDatos = () => {
   const [file, setFile] = useState<File | null>(null);
