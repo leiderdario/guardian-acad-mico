@@ -8,6 +8,7 @@ import {
   LogOut,
   GaugeCircle,
   ClipboardList,
+  BellRing,
 } from "lucide-react";
 import { InstitutionalLogo } from "@/components/InstitutionalLogo";
 import { NavLink } from "@/components/NavLink";
