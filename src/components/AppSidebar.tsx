@@ -7,6 +7,7 @@ import {
   Settings,
   LogOut,
   GaugeCircle,
+  ClipboardList,
 } from "lucide-react";
 import { InstitutionalLogo } from "@/components/InstitutionalLogo";
 import { NavLink } from "@/components/NavLink";
