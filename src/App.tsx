@@ -11,6 +11,7 @@ import Historial from "./pages/Historial";
 import Reportes from "./pages/Reportes";
 import Configuracion from "./pages/Configuracion";
 import ValidacionModelo from "./pages/ValidacionModelo";
+import PlanIntervencion from "./pages/PlanIntervencion";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
