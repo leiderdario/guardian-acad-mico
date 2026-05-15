@@ -33,6 +33,7 @@ const items = [
   { title: "Analisis de Riesgo", url: "/analisis", icon: AlertTriangle },
   { title: "Validacion del Modelo", url: "/validacion", icon: GaugeCircle },
   { title: "Plan de Intervencion", url: "/intervencion", icon: ClipboardList },
+  { title: "Alertas y Notificaciones", url: "/alertas", icon: BellRing },
   { title: "Historial y Seguimiento", url: "/historial", icon: History },
   { title: "Reportes", url: "/reportes", icon: FileText },
   { title: "Configuracion", url: "/configuracion", icon: Settings },
