@@ -31,6 +31,7 @@ const items = [
   { title: "Carga de Datos", url: "/carga", icon: Upload },
   { title: "Analisis de Riesgo", url: "/analisis", icon: AlertTriangle },
   { title: "Validacion del Modelo", url: "/validacion", icon: GaugeCircle },
+  { title: "Plan de Intervencion", url: "/intervencion", icon: ClipboardList },
   { title: "Historial y Seguimiento", url: "/historial", icon: History },
   { title: "Reportes", url: "/reportes", icon: FileText },
   { title: "Configuracion", url: "/configuracion", icon: Settings },
