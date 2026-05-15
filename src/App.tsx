@@ -11,6 +11,7 @@ import Historial from "./pages/Historial";
 import Reportes from "./pages/Reportes";
 import Configuracion from "./pages/Configuracion";
 import ValidacionModelo from "./pages/ValidacionModelo";
+import PlanIntervencion from "./pages/PlanIntervencion";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
           <Route path="/carga" element={<CargaDatos />} />
           <Route path="/analisis" element={<AnalisisRiesgo />} />
           <Route path="/validacion" element={<ValidacionModelo />} />
+          <Route path="/intervencion" element={<PlanIntervencion />} />
           <Route path="/historial" element={<Historial />} />
           <Route path="/reportes" element={<Reportes />} />
           <Route path="/configuracion" element={<Configuracion />} />
