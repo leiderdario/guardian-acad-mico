@@ -13,6 +13,7 @@ import Configuracion from "./pages/Configuracion";
 import ValidacionModelo from "./pages/ValidacionModelo";
 import PlanIntervencion from "./pages/PlanIntervencion";
 import Alertas from "./pages/Alertas";
+import DashboardEjecutivo from "./pages/DashboardEjecutivo";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
