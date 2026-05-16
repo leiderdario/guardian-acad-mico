@@ -9,6 +9,7 @@ import {
   GaugeCircle,
   ClipboardList,
   BellRing,
+  Building2,
 } from "lucide-react";
 import { InstitutionalLogo } from "@/components/InstitutionalLogo";
 import { NavLink } from "@/components/NavLink";
@@ -34,6 +35,7 @@ const items = [
   { title: "Validacion del Modelo", url: "/validacion", icon: GaugeCircle },
   { title: "Plan de Intervencion", url: "/intervencion", icon: ClipboardList },
   { title: "Alertas y Notificaciones", url: "/alertas", icon: BellRing },
+  { title: "Dashboard Ejecutivo", url: "/ejecutivo", icon: Building2 },
   { title: "Historial y Seguimiento", url: "/historial", icon: History },
   { title: "Reportes", url: "/reportes", icon: FileText },
   { title: "Configuracion", url: "/configuracion", icon: Settings },

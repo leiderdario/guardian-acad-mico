@@ -13,6 +13,7 @@ import Configuracion from "./pages/Configuracion";
 import ValidacionModelo from "./pages/ValidacionModelo";
 import PlanIntervencion from "./pages/PlanIntervencion";
 import Alertas from "./pages/Alertas";
+import DashboardEjecutivo from "./pages/DashboardEjecutivo";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
           <Route path="/validacion" element={<ValidacionModelo />} />
           <Route path="/intervencion" element={<PlanIntervencion />} />
           <Route path="/alertas" element={<Alertas />} />
+          <Route path="/ejecutivo" element={<DashboardEjecutivo />} />
           <Route path="/historial" element={<Historial />} />
           <Route path="/reportes" element={<Reportes />} />
           <Route path="/configuracion" element={<Configuracion />} />
