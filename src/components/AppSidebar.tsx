@@ -9,6 +9,7 @@ import {
   GaugeCircle,
   ClipboardList,
   BellRing,
+  Building2,
 } from "lucide-react";
 import { InstitutionalLogo } from "@/components/InstitutionalLogo";
 import { NavLink } from "@/components/NavLink";
