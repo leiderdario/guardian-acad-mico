@@ -33,6 +33,7 @@ function RiskBar({ value }: { value: number }) {
 }
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const total = mockStudents.length;
   const alto = mockStudents.filter((s) => s.indiceRiesgo > 65).length;
   const medio = mockStudents.filter((s) => s.indiceRiesgo > 30 && s.indiceRiesgo <= 65).length;
