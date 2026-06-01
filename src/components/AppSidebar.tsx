@@ -10,6 +10,10 @@ import {
   ClipboardList,
   BellRing,
   Building2,
+  Map,
+  Sparkles,
+  Cpu,
+  Presentation,
 } from "lucide-react";
 import { InstitutionalLogo } from "@/components/InstitutionalLogo";
 import { NavLink } from "@/components/NavLink";
@@ -19,6 +23,7 @@ import {
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -28,17 +33,36 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useNavigate } from "react-router-dom";
 
-const items = [
-  { title: "Panel General", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Carga de Datos", url: "/carga", icon: Upload },
-  { title: "Analisis de Riesgo", url: "/analisis", icon: AlertTriangle },
-  { title: "Validacion del Modelo", url: "/validacion", icon: GaugeCircle },
-  { title: "Plan de Intervencion", url: "/intervencion", icon: ClipboardList },
-  { title: "Alertas y Notificaciones", url: "/alertas", icon: BellRing },
-  { title: "Dashboard Ejecutivo", url: "/ejecutivo", icon: Building2 },
-  { title: "Historial y Seguimiento", url: "/historial", icon: History },
-  { title: "Reportes", url: "/reportes", icon: FileText },
-  { title: "Configuracion", url: "/configuracion", icon: Settings },
+const grupos = [
+  {
+    label: "Operacion",
+    items: [
+      { title: "Panel General", url: "/dashboard", icon: LayoutDashboard },
+      { title: "Carga de Datos", url: "/carga", icon: Upload },
+      { title: "Analisis de Riesgo", url: "/analisis", icon: AlertTriangle },
+      { title: "Plan de Intervencion", url: "/intervencion", icon: ClipboardList },
+      { title: "Alertas y Notificaciones", url: "/alertas", icon: BellRing },
+    ],
+  },
+  {
+    label: "Inteligencia",
+    items: [
+      { title: "Asistente IA", url: "/asistente", icon: Sparkles },
+      { title: "Mapa de Calor", url: "/mapa", icon: Map },
+      { title: "Comparador de Modelos", url: "/comparador", icon: Cpu },
+      { title: "Validacion del Modelo", url: "/validacion", icon: GaugeCircle },
+    ],
+  },
+  {
+    label: "Estrategia",
+    items: [
+      { title: "Dashboard Ejecutivo", url: "/ejecutivo", icon: Building2 },
+      { title: "Modo Keynote", url: "/keynote", icon: Presentation },
+      { title: "Historial y Seguimiento", url: "/historial", icon: History },
+      { title: "Reportes", url: "/reportes", icon: FileText },
+      { title: "Configuracion", url: "/configuracion", icon: Settings },
+    ],
+  },
 ];
 
 export function AppSidebar() {

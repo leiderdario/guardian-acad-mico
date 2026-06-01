@@ -14,6 +14,11 @@ import ValidacionModelo from "./pages/ValidacionModelo";
 import PlanIntervencion from "./pages/PlanIntervencion";
 import Alertas from "./pages/Alertas";
 import DashboardEjecutivo from "./pages/DashboardEjecutivo";
+import PerfilEstudiante from "./pages/PerfilEstudiante";
+import MapaCalor from "./pages/MapaCalor";
+import AsistenteIA from "./pages/AsistenteIA";
+import ComparadorModelos from "./pages/ComparadorModelos";
+import Keynote from "./pages/Keynote";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,9 +36,14 @@ const App = () => (
           <Route path="/carga" element={<CargaDatos />} />
           <Route path="/analisis" element={<AnalisisRiesgo />} />
           <Route path="/validacion" element={<ValidacionModelo />} />
+          <Route path="/comparador" element={<ComparadorModelos />} />
           <Route path="/intervencion" element={<PlanIntervencion />} />
           <Route path="/alertas" element={<Alertas />} />
           <Route path="/ejecutivo" element={<DashboardEjecutivo />} />
+          <Route path="/mapa" element={<MapaCalor />} />
+          <Route path="/asistente" element={<AsistenteIA />} />
+          <Route path="/estudiante/:codigo" element={<PerfilEstudiante />} />
+          <Route path="/keynote" element={<Keynote />} />
           <Route path="/historial" element={<Historial />} />
           <Route path="/reportes" element={<Reportes />} />
           <Route path="/configuracion" element={<Configuracion />} />
