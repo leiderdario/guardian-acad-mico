@@ -8,6 +8,7 @@ import {
   Accessibility,
   ChevronDown,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -32,6 +33,7 @@ function RiskBar({ value }: { value: number }) {
 }
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const total = mockStudents.length;
   const alto = mockStudents.filter((s) => s.indiceRiesgo > 65).length;
   const medio = mockStudents.filter((s) => s.indiceRiesgo > 30 && s.indiceRiesgo <= 65).length;
@@ -110,7 +112,7 @@ const Dashboard = () => {
                     </thead>
                     <tbody>
                       {top10.map((s) => (
-                        <tr key={s.codigo} className="border-b border-border/50 hover:bg-secondary/40">
+                        <tr key={s.codigo} onClick={() => navigate(`/estudiante/${encodeURIComponent(s.codigo)}`)} className="border-b border-border/50 hover:bg-secondary/40 cursor-pointer transition-colors">
                           <td className="py-2 pr-4">
                             <div className="flex items-center gap-2">
                               <FacultadCodigoChip facultad={s.facultad} codigo={s.codigo} />
