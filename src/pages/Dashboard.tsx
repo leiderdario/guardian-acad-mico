@@ -112,7 +112,7 @@ const Dashboard = () => {
                     </thead>
                     <tbody>
                       {top10.map((s) => (
-                        <tr key={s.codigo} className="border-b border-border/50 hover:bg-secondary/40">
+                        <tr key={s.codigo} onClick={() => navigate(`/estudiante/${encodeURIComponent(s.codigo)}`)} className="border-b border-border/50 hover:bg-secondary/40 cursor-pointer transition-colors">
                           <td className="py-2 pr-4">
                             <div className="flex items-center gap-2">
                               <FacultadCodigoChip facultad={s.facultad} codigo={s.codigo} />
