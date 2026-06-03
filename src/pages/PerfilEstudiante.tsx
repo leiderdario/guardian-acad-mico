@@ -18,6 +18,7 @@ import {
 import { mockStudents } from "@/lib/mockData";
 import { generarFactoresXAI, generarProyeccionDigitalTwin } from "@/lib/xaiData";
 import { CondicionEspecialBadge } from "@/components/CondicionEspecialBadge";
+import { ExplicacionXAI } from "@/components/ExplicacionXAI";
 
 const PerfilEstudiante = () => {
   const { codigo } = useParams();
@@ -225,6 +226,8 @@ const PerfilEstudiante = () => {
                 </CardContent>
               </Card>
             </div>
+
+            <ExplicacionXAI estudiante={estudiante} factores={factores} />
           </TabsContent>
 
           {/* ============ WHAT-IF ============ */}
